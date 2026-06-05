@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background: #f7f8fa; color: #1a1a2e; }
+.header { background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.logo { font-size: 18px; font-weight: 700; }
+.logo span { color: #3b82f6; }
+.mbar { display: flex; gap: 14px; flex-wrap: wrap; }
+.mitem .mn { color: #999; font-size: 11px; }
+.mitem .mv { font-weight: 700; font-size: 13px; }
+.up{color:#ef4444} .down{color:#3b82f6} .flat{color:#888}
+.mode-tabs { display: flex; background: #fff; border-bottom: 0.5px solid #e0e0e0; padding: 0 20px; overflow-x: auto; }
+.mode-tab { padding: 12px 18px; font-size: 14px; cursor: pointer; border-bottom: 2px solid transparent; color: #888; white-space: nowrap; }
+.mode-tab.active { border-bottom-color: #3b82f6; color: #3b82f6; font-weight: 600; }
+.filter-bar { display: flex; gap: 8px; padding: 12px 20px; overflow-x: auto; background: #fff; border-bottom: 0.5px solid #f0f0f0; }
+.filter-btn { font-size: 12px; padding: 5px 12px; border-radius: 20px; border: 0.5px solid #e0e0e0; background: #fff; cursor: pointer; white-space: nowrap; color: #555; }
+.filter-btn.active { background: #3b82f6; color: #fff; border-color: #3b82f6; }
+.main { padding: 14px 20px; max-width: 900px; margin: 0 auto; }
+.sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.sec-title { font-size: 15px; font-weight: 600; }
+.badge { font-size: 11px; background: #eff6ff; color: #3b82f6; padding: 2px 10px; border-radius: 20px; }
+.cards { display: flex; flex-direction: column; gap: 10px; }
+.card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 14px 16px; cursor: pointer; transition: border-color .15s; }
+.card:hover { border-color: #93c5fd; }
+.card.longterm { border-left: 3px solid #10b981; }
+.card-top { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; }
+.rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.r1{background:#fef9c3;color:#b45309} .r2{background:#f1f5f9;color:#475569} .r3{background:#fff7ed;color:#c2410c} .rn{background:#f3f4f6;color:#6b7280}
+.sname { font-size: 15px; font-weight: 600; }
+.smeta { font-size: 11px; color: #bbb; margin-bottom: 4px; }
+.tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+.tag { font-size: 11px; padding: 2px 7px; border-radius: 20px; }
+.tg{background:#f0fdf4;color:#15803d} .tr{background:#fff1f2;color:#b91c1c} .tb{background:#eff6ff;color:#1d4ed8} .tgr{background:#f3f4f6;color:#4b5563} .tpu{background:#f5f3ff;color:#6d28d9} .tor{background:#fff7ed;color:#c2410c}
+.right { text-align: right; }
+.price { font-size: 16px; font-weight: 700; }
+.chg { font-size: 12px; margin-top: 2px; }
+.stars { color: #f59e0b; font-size: 12px; margin-top: 3px; }
+.detail { display: none; border-top: 0.5px solid #f0f0f0; margin-top: 12px; padding-top: 12px; }
+.detail.open { display: block; }
+.dgrid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 10px; }
+.dc { background: #f8fafc; border-radius: 8px; padding: 8px 10px; }
+.dlabel { font-size: 11px; color: #aaa; margin-bottom: 3px; }
+.dval { font-size: 14px; font-weight: 600; }
+.sbox { border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.8; }
+.sbox.danta { background: #eff6ff; }
+.sbox.long { background: #f0fdf4; }
+.sbox strong { color: #1d4ed8; }
+.sbox.long strong { color: #15803d; }
+.rtext { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 10px; }
+.note { font-size: 11px; background: #f0fdf4; color: #15803d; padding: 6px 14px; border-radius: 8px; margin-bottom: 12px; text-align: center; }
+.note.loading { background: #fff7ed; color: #c2410c; }
+.disclaimer { font-size: 11px; color: #ccc; text-align: center; margin-top: 16px; padding-bottom: 28px; line-height: 1.7; }
+.sector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+.sector-card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 14px; }
+.sector-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.sector-card p { font-size: 12px; color: #666; line-height: 1.6; }
+.sector-card .stocks { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 4px; }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #e0e0e0; border-top-color: #3b82f6; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: middle; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">단타<span>AI</span></div>
+  <div class="mbar">
+    <div class="mitem"><div class="mn">삼성전자</div><div class="mv" id="h-ss">로딩중...</div></div>
+    <div class="mitem"><div class="mn">SK하이닉스</div><div class="mv" id="h-sk">로딩중...</div></div>
+    <div class="mitem"><div class="mn">업데이트</div><div class="mv" style="color:#aaa;font-size:12px" id="h-time">-</div></div>
+  </div>
+</div>
+
+<div class="mode-tabs">
+  <div class="mode-tab active" id="m-danta" onclick="switchMode('danta')">⚡ 단타 추천</div>
+  <div class="mode-tab" id="m-long" onclick="switchMode('long')">📈 장투 추천</div>
+  <div class="mode-tab" id="m-sector" onclick="switchMode('sector')">🗺 섹터 분석</div>
+</div>
+
+<div class="filter-bar" id="filter-bar">
+  <button class="filter-btn active" onclick="setFilter('all',this)">전체</button>
+  <button class="filter-btn" onclick="setFilter('반도체',this)">반도체</button>
+  <button class="filter-btn" onclick="setFilter('AI·데이터센터',this)">AI·데이터센터</button>
+  <button class="filter-btn" onclick="setFilter('로봇',this)">로봇</button>
+  <button class="filter-btn" onclick="setFilter('조선·방산',this)">조선·방산</button>
+  <button class="filter-btn" onclick="setFilter('우주항공',this)">우주항공</button>
+  <button class="filter-btn" onclick="setFilter('2차전지',this)">2차전지</button>
+</div>
+
+<div class="main">
+  <div class="note" id="top-note"><span class="spinner"></span>한투 API 실시간 데이터 불러오는 중...</div>
+  <div class="sec-head">
+    <div class="sec-title" id="sec-title">오늘의 단타 추천 종목</div>
+    <span class="badge" id="cnt">-</span>
+  </div>
+  <div id="card-section" class="cards"></div>
+  <div id="sector-section" style="display:none"></div>
+  <div class="disclaimer">본 사이트는 투자 참고용이며 실제 투자 손익의 책임은 본인에게 있습니다.</div>
+</div>
+
+<script>
+const PROXY = 'https://dry-snowflake-ae3c.chltoal2.workers.dev';
+
+const DANTA_BASE = [
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', rsi:60, macd:'매수', score:88, reason:'반도체 숨고르기 구간. HBM 수요 구조적 성장 변함없어 눌림목 매수 유효.', tags:[{l:'반도체',c:'tr'},{l:'HBM',c:'tr'},{l:'코스피',c:'tgr'}]},
+  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', rsi:52, macd:'중립', score:78, reason:'브로드컴 쇼크로 반도체 전반 약세. 단기 조정 후 재매수 타이밍 접근 중.', tags:[{l:'반도체',c:'tr'},{l:'눌림목',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'주성엔지니어링', code:'036930', market:'kosdaq', sector:'반도체', rsi:72, macd:'매수', score:90, reason:'삼전·닉스 숨고르기 속 반도체 장비주 급등. 오늘도 강세 예상, 한 달 새 157% 급등 모멘텀 지속.', tags:[{l:'반도체 장비',c:'tr'},{l:'강세 지속',c:'tr'},{l:'코스닥',c:'tgr'}]},
+  {name:'이오테크닉스', code:'039030', market:'kosdaq', sector:'반도체', rsi:44, macd:'중립', score:81, reason:'반도체 장비 순환매 수혜. 외국인 순매수 지속, 조정 후 매수 타이밍.', tags:[{l:'반도체 장비',c:'tr'},{l:'외국인 매수',c:'tb'},{l:'코스닥',c:'tgr'}]},
+  {name:'삼성전기', code:'009150', market:'kospi', sector:'반도체', rsi:65, macd:'매수', score:83, reason:'AI 서버용 MLCC 수요 폭증 수혜. 반도체 조정 속에서도 상대적 강세 유지.', tags:[{l:'반도체 부품',c:'tr'},{l:'MLCC',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'한미반도체', code:'042700', market:'kospi', sector:'반도체', rsi:33, macd:'중립', score:79, reason:'RSI 33 과매도 구간. HBM 패키징 장비 독점, 펀더멘털 이상 없어 반등 기대.', tags:[{l:'반도체 장비',c:'tr'},{l:'RSI 과매도',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'원익IPS', code:'240810', market:'kosdaq', sector:'반도체', rsi:40, macd:'중립', score:76, reason:'반도체 장비 순환매 수혜. 외국인 순매수 지속, RSI 40 매수 구간.', tags:[{l:'반도체 장비',c:'tr'},{l:'외국인 매수',c:'tb'},{l:'코스닥',c:'tgr'}]},
+  {name:'리노공업', code:'058470', market:'kosdaq', sector:'반도체', rsi:43, macd:'중립', score:76, reason:'반도체 테스트 소켓 독점, 영업이익률 40%+ 알짜기업. 조정 후 매수 구간.', tags:[{l:'반도체 소재',c:'tr'},{l:'알짜기업',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'HPSP', code:'403870', market:'kosdaq', sector:'반도체', rsi:35, macd:'중립', score:79, reason:'RSI 35 과매도 구간. 고압수소어닐링 장비 세계 1위, 반등 노릴 타이밍.', tags:[{l:'반도체 장비',c:'tr'},{l:'RSI 과매도',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', rsi:64, macd:'매수', score:86, reason:'오늘 순환매 수혜 1순위. 방산·전력기기로 순환매 확산 예상, 데이터센터 전력 수요 지속.', tags:[{l:'AI 데이터센터',c:'tb'},{l:'순환매 수혜',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', rsi:38, macd:'중립', score:81, reason:'RSI 38 과매도. 순환매 수혜 예상, 변압기 수주 2028년까지 지속.', tags:[{l:'AI 데이터센터',c:'tb'},{l:'RSI 과매도',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', rsi:36, macd:'중립', score:76, reason:'RSI 36 과매도. 로봇 테마 선도주, 젠슨 황 방한 기대감 재점화 가능성.', tags:[{l:'로봇',c:'tr'},{l:'RSI 과매도',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', rsi:50, macd:'중립', score:73, reason:'10만원 지지선 유지. K-휴머노이드 얼라이언스 핵심, 중장기 성장 스토리 유효.', tags:[{l:'로봇',c:'tr'},{l:'코스닥',c:'tgr'}]},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', rsi:53, macd:'매수', score:82, reason:'오늘 순환매 수혜 핵심. 방산으로 순환매 확산 예상, 스페이스X IPO 임박 이중 모멘텀.', tags:[{l:'방산',c:'tpu'},{l:'순환매 수혜',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'현대로템', code:'064350', market:'kospi', sector:'조선·방산', rsi:61, macd:'매수', score:78, reason:'방산 순환매 수혜. 폴란드 K2 전차 수출 협상 지속, 오늘 방산주 강세 예상.', tags:[{l:'방산',c:'tpu'},{l:'순환매 수혜',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', rsi:52, macd:'매수', score:75, reason:'원전 순환매 수혜. 10만원 지지선 유지, 조방원 테마 지속.', tags:[{l:'원전',c:'tpu'},{l:'코스피',c:'tgr'}]},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', rsi:62, macd:'매수', score:82, reason:'스페이스X IPO 6월 임박 수혜. 미국 자회사 스페이스X·NASA 실제 공급망.', tags:[{l:'스페이스X',c:'tor'},{l:'IPO 수혜',c:'tor'},{l:'코스닥',c:'tgr'}]},
+];
+
+const LONG = [
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', score:95, horizon:'2~3년', upside:'+40~60%', reason:'HBM 시장 독점적 지위. AI 데이터센터 수요 2030년까지 구조적 성장.', point:'매 조정 시 분할 매수 전략. 목표주가 3,200,000~3,500,000원.', tags:[{l:'반도체',c:'tr'},{l:'HBM 1위',c:'tr'},{l:'장기보유',c:'tg'}]},
+  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', score:90, horizon:'1~2년', upside:'+25~35%', reason:'글로벌 변압기 수주 2028년까지 호황. AI 데이터센터 전력 인프라 필수 기업.', point:'조정 구간 매수 기회. 증권가 목표주가 평균 1,398,000원.', tags:[{l:'AI 인프라',c:'tb'},{l:'장기보유',c:'tg'}]},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', score:88, horizon:'2~3년', upside:'+30~50%', reason:'방산 수출 + 우주항공 이중 모멘텀. 스페이스X IPO로 우주 산업 구조적 성장.', point:'방산·우주 투트랙 성장주. 조선·방산·원전 테마 핵심.', tags:[{l:'방산',c:'tpu'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}]},
+  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', score:85, horizon:'2~4년', upside:'+50~80%', reason:'K-휴머노이드 얼라이언스 참여. 협동로봇 글로벌 수주 확대.', point:'장기 성장성 높지만 변동성 큼. 분할 매수 권장.', tags:[{l:'로봇',c:'tr'},{l:'성장주',c:'tb'},{l:'장기보유',c:'tg'}]},
+  {name:'삼성SDI', code:'006400', market:'kospi', sector:'2차전지', score:83, horizon:'1~3년', upside:'+30~50%', reason:'AI 데이터센터 ESS 수요 + 전고체 배터리 2027년 양산 예정.', point:'전고체 배터리 상용화 시점이 핵심. 장기 분할 매수 적합.', tags:[{l:'2차전지',c:'tb'},{l:'전고체',c:'tpu'},{l:'장기보유',c:'tg'}]},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', score:82, horizon:'1~2년', upside:'+40~70%', reason:'스페이스X 실제 공급망 종목. IPO 이후 우주 산업 본격 성장기 진입.', point:'스페이스X IPO 전후 변동성 클 수 있음. 소액 분산 투자 권장.', tags:[{l:'스페이스X',c:'tor'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}]},
+];
+
+const SECTORS = [
+  {icon:'💾', name:'반도체·HBM', desc:'AI 슈퍼사이클 핵심. HBM 수요 2030년까지 구조적 성장.', stocks:['SK하이닉스','삼성전자','한미반도체','주성엔지니어링'], momentum:'🔥 최상', risk:'중간'},
+  {icon:'⚡', name:'AI 데이터센터·전력', desc:'데이터센터 전력 수요 2026년까지 2배 증가 전망.', stocks:['HD현대일렉트릭','LS일렉트릭','효성중공업'], momentum:'🔥 최상', risk:'낮음'},
+  {icon:'🤖', name:'로봇·휴머노이드', desc:'K-휴머노이드 얼라이언스 출범. 2026년 상용화 원년.', stocks:['레인보우로보틱스','두산로보틱스','HD현대로보틱스'], momentum:'🔥 최상', risk:'높음'},
+  {icon:'🛡', name:'조선·방산', desc:'한미 통상 협상·동유럽 수출 기대감. 최근 급부상 중.', stocks:['한화에어로스페이스','현대로템','한화오션'], momentum:'⬆ 상승', risk:'중간'},
+  {icon:'🚀', name:'우주항공·스페이스X', desc:'스페이스X IPO 6월 임박. 국내 공급망 수혜.', stocks:['켄코아에어로스페이스','한화에어로스페이스'], momentum:'⬆ 급등', risk:'높음'},
+  {icon:'🔋', name:'2차전지·ESS', desc:'AI 데이터센터 ESS 수요 + 전고체 배터리 모멘텀.', stocks:['삼성SDI','LG에너지솔루션','에코프로비엠'], momentum:'↗ 회복', risk:'중간'},
+];
+
+let allStocks = [], curMode = 'danta', curFilter = 'all', TOKEN = '';
+
+async function getToken() {
+  if (TOKEN) return TOKEN;
+  const res = await fetch(`${PROXY}/token`);
+  const data = await res.json();
+  TOKEN = data.access_token;
+  return TOKEN;
+}
+
+async function fetchPrice(code) {
+  try {
+    const token = await getToken();
+    const res = await fetch(`${PROXY}/quote/${code}?token=${token}`);
+    const data = await res.json();
+    const o = data.output;
+    if (!o || !o.stck_prpr) return null;
+    const price = parseInt(o.stck_prpr);
+    const change = parseFloat(o.prdy_ctrt);
+    const vol = parseInt(o.acml_vol || 0);
+    const avg = parseInt(o.avrg_vol || vol || 1);
+    const volRatio = parseFloat((vol / Math.max(avg, 1)).toFixed(1));
+    return { price, change, volRatio };
+  } catch(e) { return null; }
+}
+
+function switchMode(m) {
+  curMode = m;
+  ['danta','long','sector'].forEach(x => document.getElementById('m-'+x).classList.toggle('active', x===m));
+  document.getElementById('filter-bar').style.display = m==='sector'?'none':'flex';
+  document.getElementById('card-section').style.display = m==='sector'?'none':'flex';
+  document.getElementById('sector-section').style.display = m==='sector'?'block':'none';
+  if (m==='danta') document.getElementById('sec-title').textContent = '오늘의 단타 추천 종목';
+  if (m==='long') document.getElementById('sec-title').textContent = '장기 투자 추천 종목';
+  if (m==='sector') document.getElementById('sec-title').textContent = '섹터별 시장 분석';
+  if (m!=='sector') render();
+  else renderSectors();
+}
+
+function setFilter(f, el) {
+  curFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function render() {
+  const data = curMode==='danta' ? allStocks : LONG;
+  const list = (curFilter==='all' ? data : data.filter(s=>s.sector===curFilter)).sort((a,b)=>b.score-a.score);
+  document.getElementById('cnt').textContent = list.length+'개 종목';
+  const container = document.getElementById('card-section');
+  container.innerHTML = '';
+  list.forEach((s,i) => {
+    const rc = i===0?'r1':i===1?'r2':i===2?'r3':'rn';
+    const cc = s.change>0?'up':s.change<0?'down':'flat';
+    const sign = s.change>0?'+':'';
+    const starN = Math.min(5,Math.round(s.score/20));
+    const stars = '★'.repeat(starN)+'☆'.repeat(5-starN);
+    const tagsHtml = s.tags.map(t=>`<span class="tag ${t.c}">${t.l}</span>`).join('');
+    const el = document.createElement('div');
+    el.className = 'card'+(curMode==='long'?' longterm':'');
+    const detailHtml = curMode==='danta' ? `
+      <div class="dgrid">
+        <div class="dc"><div class="dlabel">현재가</div><div class="dval ${cc}">${s.price.toLocaleString()}</div></div>
+        <div class="dc"><div class="dlabel">RSI</div><div class="dval ${s.rsi<35?'up':s.rsi>65?'down':''}">${s.rsi}</div></div>
+        <div class="dc"><div class="dlabel">MACD</div><div class="dval ${s.macd==='매수'?'up':s.macd==='매도'?'down':'flat'}">${s.macd}</div></div>
+        <div class="dc"><div class="dlabel">거래량</div><div class="dval up">${s.volRatio}배</div></div>
+      </div>
+      <div class="sbox danta">
+        <strong>단타 전략</strong><br>
+        진입가 <strong>${s.entry.toLocaleString()}원</strong> &nbsp;|&nbsp;
+        목표가 <strong style="color:#ef4444">${s.target.toLocaleString()}원(+2.5%)</strong> &nbsp;|&nbsp;
+        손절가 <strong style="color:#3b82f6">${s.stop.toLocaleString()}원(-1.5%)</strong>
+      </div>` : `
+      <div class="dgrid">
+        <div class="dc"><div class="dlabel">현재가</div><div class="dval ${cc}">${s.price ? s.price.toLocaleString() : '-'}</div></div>
+        <div class="dc"><div class="dlabel">투자기간</div><div class="dval" style="color:#10b981">${s.horizon}</div></div>
+        <div class="dc"><div class="dlabel">예상수익</div><div class="dval up">${s.upside}</div></div>
+        <div class="dc"><div class="dlabel">추천점수</div><div class="dval" style="color:#f59e0b">${s.score}점</div></div>
+      </div>
+      <div class="sbox long"><strong>장투 포인트</strong><br><span style="font-size:12px;color:#444">${s.point}</span></div>`;
+    el.innerHTML = `
+      <div class="card-top">
+        <div class="rank ${rc}">${i+1}</div>
+        <div>
+          <div class="smeta">${s.market==='kospi'?'코스피':'코스닥'} · ${s.code} · ${s.sector}</div>
+          <div class="sname">${s.name}</div>
+          <div class="tags">${tagsHtml}</div>
+        </div>
+        <div class="right">
+          <div class="price ${cc}">${s.price ? s.price.toLocaleString()+'원' : '로딩중...'}</div>
+          <div class="chg ${cc}">${sign}${s.change || 0}%</div>
+          <div class="stars">${stars} <span style="font-size:11px;color:#aaa">${s.score}점</span></div>
+        </div>
+      </div>
+      <div class="detail" id="d${i}">
+        <div class="rtext">${s.reason}</div>
+        ${detailHtml}
+      </div>`;
+    el.querySelector('.card-top').addEventListener('click', ()=>document.getElementById('d'+i).classList.toggle('open'));
+    container.appendChild(el);
+  });
+}
+
+function renderSectors() {
+  document.getElementById('cnt').textContent = SECTORS.length+'개 섹터';
+  document.getElementById('sector-section').innerHTML = '<div class="sector-grid">'+SECTORS.map(s=>`
+    <div class="sector-card">
+      <h3>${s.icon} ${s.name}</h3>
+      <p>${s.desc}</p>
+      <div style="margin-top:8px;font-size:11px">모멘텀 ${s.momentum} | 리스크 ${s.risk}</div>
+      <div class="stocks">${s.stocks.map(st=>`<span class="tag tgr">${st}</span>`).join('')}</div>
+    </div>`).join('')+'</div>';
+}
+
+async function init() {
+  // 먼저 기본 데이터로 화면 그리기
+  allStocks = DANTA_BASE.map(s => ({...s, price:0, change:0, volRatio:1, entry:0, target:0, stop:0}));
+  render();
+
+  // 실시간 주가 가져오기
+  const note = document.getElementById('top-note');
+  note.innerHTML = '<span class="spinner"></span>한투 API 실시간 시세 불러오는 중...';
+  note.className = 'note loading';
+
+  try {
+    const results = await Promise.allSettled(DANTA_BASE.map(async s => {
+      const live = await fetchPrice(s.code);
+      if (!live || !live.price) return {...s, price:0, change:0, volRatio:1, entry:0, target:0, stop:0};
+      return {
+        ...s,
+        price: live.price,
+        change: live.change,
+        volRatio: live.volRatio,
+        entry: live.price,
+        target: Math.round(live.price * 1.025),
+        stop: Math.round(live.price * 0.985),
+      };
+    }));
+
+    allStocks = results.map(r => r.status==='fulfilled' ? r.value : null).filter(Boolean);
+
+    const ss = allStocks.find(s=>s.code==='005930');
+    const sk = allStocks.find(s=>s.code==='000660');
+    if (ss && ss.price) { document.getElementById('h-ss').textContent=ss.price.toLocaleString()+'원'; document.getElementById('h-ss').className='mv '+(ss.change>=0?'up':'down'); }
+    if (sk && sk.price) { document.getElementById('h-sk').textContent=sk.price.toLocaleString()+'원'; document.getElementById('h-sk').className='mv '+(sk.change>=0?'up':'down'); }
+    document.getElementById('h-time').textContent = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})+' 실시간';
+
+    note.innerHTML = '✅ 한투 API 실시간 데이터 연동 완료';
+    note.className = 'note';
+    render();
+  } catch(e) {
+    note.innerHTML = '⚠️ 실시간 데이터 로딩 실패 — 잠시 후 새로고침해주세요';
+    note.className = 'note loading';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
