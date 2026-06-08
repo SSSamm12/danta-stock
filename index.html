@@ -262,7 +262,8 @@ async function init() {
   allStocks = DANTA_BASE.map(s => ({...s, price:0, change:0, volRatio:1, entry:0, target:0, stop:0}));
   render();
 
-  // 실시간 주가 가져오기
+  // 토큰 한 번만 발급
+  TOKEN = await getToken();
   const note = document.getElementById('top-note');
   note.innerHTML = '<span class="spinner"></span>한투 API 실시간 시세 불러오는 중...';
   note.className = 'note loading';
