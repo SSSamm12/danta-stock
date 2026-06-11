@@ -54,7 +54,25 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 .note { font-size: 11px; background: #f0fdf4; color: #15803d; padding: 6px 14px; border-radius: 8px; margin-bottom: 12px; text-align: center; }
 .note.loading { background: #fff7ed; color: #c2410c; }
 .disclaimer { font-size: 11px; color: #ccc; text-align: center; margin-top: 16px; padding-bottom: 28px; line-height: 1.7; }
-.sector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+.report-wrap { display: flex; flex-direction: column; gap: 14px; }
+.report-card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 16px; }
+.report-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.report-card p, .report-card li { font-size: 13px; color: #444; line-height: 1.8; }
+.report-card ul { padding-left: 16px; }
+.report-meta { font-size: 11px; color: #aaa; margin-bottom: 14px; text-align: right; }
+.report-badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-left: 6px; }
+.rb-up { background: #fff1f2; color: #b91c1c; }
+.rb-down { background: #eff6ff; color: #1d4ed8; }
+.rb-flat { background: #f3f4f6; color: #6b7280; }
+.rb-warn { background: #fff7ed; color: #c2410c; }
+.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+.report-item { background: #f8fafc; border-radius: 8px; padding: 8px 10px; }
+.report-item .ri-label { font-size: 11px; color: #aaa; margin-bottom: 2px; }
+.report-item .ri-val { font-size: 13px; font-weight: 600; }
+.stock-comment { border-top: 0.5px solid #f0f0f0; padding-top: 8px; margin-top: 8px; }
+.stock-comment:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.sc-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.sc-text { font-size: 12px; color: #555; line-height: 1.6; }
 .sector-card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 12px; padding: 14px; }
 .sector-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
 .sector-card p { font-size: 12px; color: #666; line-height: 1.6; }
@@ -78,6 +96,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   <div class="mode-tab active" id="m-danta" onclick="switchMode('danta')">⚡ 단타 추천</div>
   <div class="mode-tab" id="m-long" onclick="switchMode('long')">📈 장투 추천</div>
   <div class="mode-tab" id="m-sector" onclick="switchMode('sector')">🗺 섹터 분석</div>
+  <div class="mode-tab" id="m-report" onclick="switchMode('report')">📋 시황 리포트</div>
 </div>
 
 <div class="filter-bar" id="filter-bar">
@@ -98,6 +117,7 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
   </div>
   <div id="card-section" class="cards"></div>
   <div id="sector-section" style="display:none"></div>
+  <div id="report-section" style="display:none"></div>
   <div class="disclaimer">본 사이트는 투자 참고용이며 실제 투자 손익의 책임은 본인에게 있습니다.</div>
 </div>
 
@@ -170,15 +190,18 @@ async function fetchPrice(code) {
 
 function switchMode(m) {
   curMode = m;
-  ['danta','long','sector'].forEach(x => document.getElementById('m-'+x).classList.toggle('active', x===m));
-  document.getElementById('filter-bar').style.display = m==='sector'?'none':'flex';
-  document.getElementById('card-section').style.display = m==='sector'?'none':'flex';
+  ['danta','long','sector','report'].forEach(x => document.getElementById('m-'+x).classList.toggle('active', x===m));
+  document.getElementById('filter-bar').style.display = (m==='sector'||m==='report')?'none':'flex';
+  document.getElementById('card-section').style.display = (m==='sector'||m==='report')?'none':'flex';
   document.getElementById('sector-section').style.display = m==='sector'?'block':'none';
+  document.getElementById('report-section').style.display = m==='report'?'block':'none';
   if (m==='danta') document.getElementById('sec-title').textContent = '오늘의 단타 추천 종목';
   if (m==='long') document.getElementById('sec-title').textContent = '장기 투자 추천 종목';
   if (m==='sector') document.getElementById('sec-title').textContent = '섹터별 시장 분석';
-  if (m!=='sector') render();
-  else renderSectors();
+  if (m==='report') document.getElementById('sec-title').textContent = '오늘의 시황 리포트';
+  if (m==='danta' || m==='long') render();
+  else if (m==='sector') renderSectors();
+  else if (m==='report') renderReport();
 }
 
 function setFilter(f, el) {
@@ -246,7 +269,150 @@ function render() {
   });
 }
 
-function renderSectors() {
+const REPORT = {
+  date: '2026년 6월 10일 (수)',
+  updated: '오전 8:30',
+  global: {
+    summary: '미국 증시 급락 후 반등 시도 중. 나스닥 선물 +1.16% 반등, 그러나 변동성 지속.',
+    items: [
+      { label: '나스닥 선물', value: '+1.16% 반등', cls: 'up' },
+      { label: 'S&P500 선물', value: '-0.05% 보합', cls: 'flat' },
+      { label: '원달러 환율', value: '1,500원 (-0.48%)', cls: 'up' },
+      { label: 'VIX 공포지수', value: '25.09 (+12.16%)', cls: 'down' },
+      { label: 'WTI 유가', value: '$98.51 (+3.2%)', cls: 'up' },
+      { label: '금 선물', value: '$4,847 (-1.0%)', cls: 'down' },
+    ]
+  },
+  domestic: {
+    summary: '코스피 지난주 블랙먼데이(-8.29%) 이후 반등 시도. 7,763선 마감(+0.43%). 오늘 변동성 지속 예상. 선물·옵션 만기일(네 마녀의 날) 통과.',
+    items: [
+      { label: '코스피', value: '7,763 (+0.43%)', cls: 'up' },
+      { label: '코스닥', value: '반등 시도', cls: 'up' },
+      { label: 'VKOSPI', value: '54.51 (공포 구간)', cls: 'down' },
+      { label: '시장 심리', value: '불안 지속', cls: 'flat' },
+    ]
+  },
+  supply: {
+    summary: '연기금 방어적 매수 지속. 외국인은 반도체 대형주 매도 후 방산·전력·금융주로 이동 중.',
+    items: [
+      { label: '연기금 1위 순매수', value: '심텍 (142억)', cls: 'up' },
+      { label: '연기금 주목', value: 'LS일렉트릭 (115억, 2일 연속)', cls: 'up' },
+      { label: '연기금 방산', value: '한화에어로스페이스 (53억)', cls: 'up' },
+      { label: '연기금 반도체', value: '한미반도체 (15억), 이오테크닉스 (12억)', cls: 'up' },
+    ]
+  },
+  theme: [
+    { name: '🚀 스페이스X IPO', badge: 'rb-up', comment: '6월 12일 나스닥 상장 D-2. 주당 135달러, 시총 750억달러 역대 최대 IPO. 켄코아에어로스페이스 수혜 집중 주목.' },
+    { name: '⚡ 전력인프라', badge: 'rb-up', comment: '연기금 LS일렉트릭 2일 연속 115억 순매수. AI 데이터센터 전력 수요 구조적 성장 불변.' },
+    { name: '🛡 방산', badge: 'rb-up', comment: '한화에어로스페이스 연기금 53억, LIG디펜스 27억 매수. 방산 피난처 역할 지속.' },
+    { name: '💾 반도체 장비', badge: 'rb-flat', comment: '이오테크닉스 +10.5%, 두산테스나 +12.9% 급등. 대형주 하락 속 장비주 순환매 지속.' },
+    { name: '🏦 금융', badge: 'rb-up', comment: '신한지주 6일 연속 연기금 매수. 하나금융 4일 연속. 저PBR 금융주 방어주 역할.' },
+  ],
+  stocks: [
+    { name: 'SK하이닉스', comment: '블랙먼데이 급락 후 반등 구간. RSI 42 정상화 중. 오라클 AI 클라우드 실적이 추가 방향 결정.' },
+    { name: '삼성전자', comment: '29만원대 극과매도 후 회복 중. AI 반도체 펀더멘털 이상 없어 분할 매수 유효.' },
+    { name: '이오테크닉스', comment: '오늘 +10.5% 급등, 연기금 2일 연속 매수. 반도체 장비 순환매 선도주로 부각.' },
+    { name: '두산테스나', comment: '연기금 14일 연속 매수 + 오늘 +12.9% 급등. 반도체 후공정 테마 강세.' },
+    { name: 'LS일렉트릭', comment: '연기금 2일 연속 115억 대규모 매수. 전력인프라 핵심주, 조정 후 재매수 타이밍.' },
+    { name: '한화에어로스페이스', comment: '연기금 53억 매수. 스페이스X IPO D-2로 이번 주 우주항공 모멘텀 극대화.' },
+    { name: '켄코아에어로스페이스', comment: '스페이스X IPO 6월 12일 목요일. 미국 자회사 실제 공급망 종목, 이번 주 최대 이벤트.' },
+    { name: '한미반도체', comment: '연기금 매수 재개 + RSI 극과매도 회복 중. HBM 패키징 장비 독점 펀더멘털 이상 없음.' },
+  ],
+  risk: [
+    'VIX 25 — 아직 불안 구간. 추가 변동성 주의',
+    '원달러 1,500원 — 환율 안정 여부 모니터링 필요',
+    '미국 CPI 발표 예정 — 인플레 재점화 시 금리 우려 재부각',
+    '스페이스X IPO 전후 급등락 가능성',
+  ],
+  tomorrow: '스페이스X IPO(6/12) 앞두고 우주항공 테마 강세 예상. 연기금 전력인프라·방산 매수 지속 여부 주목. VIX 안정 시 반도체 반등 가속화 가능. 오라클 실적 발표 결과가 AI 섹터 방향 결정.',
+  aiOpinion: `지금 시장은 블랙먼데이 충격에서 회복 중이지만 아직 불안정해요. VIX 25는 "공포 구간"으로, 추가 변동성이 언제든 올 수 있다는 신호예요.
+
+📌 이번 주 가장 주목할 것: 6월 12일 스페이스X IPO. 역대 최대 규모 상장으로 우주항공 테마가 이번 주 가장 뜨거울 가능성이 높아요. 켄코아에어로스페이스는 실제 공급망 종목이라 IPO 전후 급등락 모두 가능하니 진입/손절 라인을 꼭 정하고 들어가세요.
+
+📌 뜰 가능성 높은 섹터: 전력인프라(LS일렉트릭). 연기금이 2일 연속 115억 대규모 매수 중이에요. 연기금이 이렇게 집중 매수하면 보통 수급이 따라와요. 단기보다는 1~2주 스윙 관점으로 접근하는 게 좋아요.
+
+📌 반도체는 아직 조심: 이오테크닉스·두산테스나 같은 장비주는 반등하고 있지만, 삼성전자·SK하이닉스 대형주는 아직 방향이 불확실해요. 오라클 실적 발표 전까지는 대형 반도체주 추격 매수보다 장비주 중심으로 접근하는 게 안전해요.
+
+📌 알아두면 좋은 것: 지금처럼 VIX가 높을 때는 어떤 종목이든 변동성이 평소의 2~3배예요. 손절 라인을 평소보다 타이트하게 잡고, 한 종목에 몰빵하지 말고 2~3개로 나눠서 들어가는 걸 추천해요.`,
+};
+
+function renderReport() {
+  document.getElementById('cnt').textContent = '오늘 리포트';
+  const s = document.getElementById('report-section');
+  s.innerHTML = `
+    <div class="report-wrap">
+      <div class="report-meta">📅 ${REPORT.date} · 업데이트 ${REPORT.updated}</div>
+
+      <div class="report-card">
+        <h3>🌍 글로벌 시황</h3>
+        <p style="margin-bottom:10px">${REPORT.global.summary}</p>
+        <div class="report-grid">
+          ${REPORT.global.items.map(i => `
+            <div class="report-item">
+              <div class="ri-label">${i.label}</div>
+              <div class="ri-val ${i.cls}">${i.value}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="report-card">
+        <h3>📈 국내 시황</h3>
+        <p style="margin-bottom:10px">${REPORT.domestic.summary}</p>
+        <div class="report-grid">
+          ${REPORT.domestic.items.map(i => `
+            <div class="report-item">
+              <div class="ri-label">${i.label}</div>
+              <div class="ri-val ${i.cls}">${i.value}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="report-card">
+        <h3>💰 외국인·기관·연기금 수급</h3>
+        <p style="margin-bottom:10px">${REPORT.supply.summary}</p>
+        <div class="report-grid">
+          ${REPORT.supply.items.map(i => `
+            <div class="report-item">
+              <div class="ri-label">${i.label}</div>
+              <div class="ri-val ${i.cls}">${i.value}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="report-card">
+        <h3>🔥 오늘 주도 테마</h3>
+        ${REPORT.theme.map(t => `
+          <div class="stock-comment">
+            <div class="sc-name">${t.name} <span class="report-badge ${t.badge}">${t.badge === 'rb-up' ? '강세' : t.badge === 'rb-down' ? '약세' : '중립'}</span></div>
+            <div class="sc-text">${t.comment}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="report-card">
+        <h3>🎯 종목별 코멘트</h3>
+        ${REPORT.stocks.map(s => `
+          <div class="stock-comment">
+            <div class="sc-name">${s.name}</div>
+            <div class="sc-text">${s.comment}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="report-card" style="border-left: 3px solid #f97316">
+        <h3>⚠️ 리스크 요인</h3>
+        <ul>${REPORT.risk.map(r => `<li>${r}</li>`).join('')}</ul>
+      </div>
+
+      <div class="report-card" style="border-left: 3px solid #10b981">
+        <h3>💡 내일 전망</h3>
+        <p>${REPORT.tomorrow}</p>
+      </div>
+
+      <div class="report-card" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: none; color: #fff;">
+        <h3 style="color:#fff">🤖 AI 종합 의견</h3>
+        <p style="color:#e2e8f0; line-height:1.9; font-size:13px">${REPORT.aiOpinion}</p>
+      </div>
+    </div>`;
+}
   document.getElementById('cnt').textContent = SECTORS.length+'개 섹터';
   document.getElementById('sector-section').innerHTML = '<div class="sector-grid">'+SECTORS.map(s=>`
     <div class="sector-card">
