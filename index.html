@@ -125,103 +125,99 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 const PROXY = 'https://dry-snowflake-ae3c.chltoal2.workers.dev';
 
 const DANTA_BASE = [
-  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', rsi:62, macd:'매수', score:90, reason:'외국인 3거래일 연속 순매수 후 17일 일시 차익실현, 그래도 코스피 신고가(8864) 견인주. FOMC 매파적 동결에도 HBM 펀더멘털·외국인 복귀 흐름 유효. 100조 주주환원 검토설도 긍정적.', tags:[{l:'반도체',c:'tr'},{l:'HBM',c:'tr'},{l:'외국인 복귀',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', rsi:54, macd:'매수', score:83, reason:'17일 외국인·기관 동반 매수세 속 반도체 업종 반등 주도. 실적 전망치 상향 기대 지속, AI 메모리 수요 구조적 성장 불변.', tags:[{l:'반도체',c:'tr'},{l:'외국인 복귀',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'두산테스나', code:'131970', market:'kosdaq', sector:'반도체', rsi:71, macd:'매수', score:90, reason:'AI·북미 고객사 확보하며 종합 테스트 솔루션 기업으로 체질 개선 중이라는 증권가 평가. 연기금 매수세 지속.', tags:[{l:'연기금 매수',c:'tr'},{l:'반도체 후공정',c:'tr'},{l:'코스닥',c:'tgr'}]},
-  {name:'원익IPS', code:'240810', market:'kosdaq', sector:'반도체', rsi:60, macd:'매수', score:84, reason:'17일 외국인 순매수 상위 + 연기금 순매수 상위에 동시 등장, 수급 신호 강함. 반도체 장비 업황 개선 기대.', tags:[{l:'외국인+연기금',c:'tr'},{l:'반도체 장비',c:'tr'},{l:'코스닥',c:'tgr'}]},
-  {name:'이오테크닉스', code:'039030', market:'kosdaq', sector:'반도체', rsi:64, macd:'매수', score:82, reason:'반도체 레이저 장비 독점력, 연기금 관심권 유지. 외국인 수급 회복 국면에서 반도체 장비株 동반 강세 기대.', tags:[{l:'연기금 매수',c:'tb'},{l:'반도체 장비',c:'tr'},{l:'코스닥',c:'tgr'}]},
-  {name:'한미반도체', code:'042700', market:'kospi', sector:'반도체', rsi:57, macd:'매수', score:80, reason:'HBM 패키징 장비 독점적 지위. 반도체 대형주 외국인 복귀 흐름 속 동반 강세 기대.', tags:[{l:'반도체 장비',c:'tr'},{l:'HBM',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'삼성전기', code:'009150', market:'kospi', sector:'AI·데이터센터', rsi:78, macd:'매수', score:91, reason:'올해 코스피 전체 종목 중 최고 상승률(700%↑). 외국인·초고수 투자자 집중 순매수, 일부 증권가는 목표주가 300만원까지 상향. AI 서버용 MLCC·기판 수요 핵심 수혜.', tags:[{l:'외국인 집중매수',c:'tr'},{l:'AI 서버 부품',c:'tb'},{l:'올해 최대 급등',c:'tr'},{l:'코스피',c:'tgr'}]},
-  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', rsi:58, macd:'매수', score:84, reason:'AI 데이터센터 전력 인프라 수요 구조적 성장 지속. 연기금 매수 기조 유지.', tags:[{l:'연기금 매수',c:'tb'},{l:'AI 데이터센터',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'효성중공업', code:'298040', market:'kospi', sector:'AI·데이터센터', rsi:53, macd:'매수', score:78, reason:'변압기 테마 핵심주. AI 데이터센터발 전력 인프라 투자 확대 수혜 지속.', tags:[{l:'변압기',c:'tb'},{l:'AI 데이터센터',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', rsi:50, macd:'중립', score:76, reason:'19일 이란·미국 종전 정식 서명 예정으로 방산 단기 모멘텀은 둔화 우려. 다만 우주항공·중동 재건 수요 등 장기 펀더멘털은 유지, 조정 시 매수 관점.', tags:[{l:'방산',c:'tpu'},{l:'우주항공',c:'tor'},{l:'단기 조정주의',c:'tgr'},{l:'코스피',c:'tgr'}]},
-  {name:'현대로템', code:'064350', market:'kospi', sector:'조선·방산', rsi:48, macd:'중립', score:72, reason:'이란 종전 공식화로 방산주 단기 차익실현 가능성. 중동 재건·방위력 강화 수요는 장기적으로 유효.', tags:[{l:'방산',c:'tpu'},{l:'단기 조정주의',c:'tgr'},{l:'코스피',c:'tgr'}]},
-  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', rsi:66, macd:'매수', score:86, reason:'스페이스X 6월 12일 나스닥 상장 완료, 공모가 135달러에서 200달러대로 강세 지속 거래 중. 국내 기관 공모주 배정 실패 이슈로 상장 후 실물 매수 관심이 국내 협력사인 본 종목에 쏠릴 가능성.', tags:[{l:'스페이스X 상장완료',c:'tor'},{l:'우주항공',c:'tor'},{l:'코스닥',c:'tgr'}]},
-  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', rsi:55, macd:'매수', score:80, reason:'올해 대형 로봇주 평균 155% 급등, 엔비디아 젠슨 황 6월 방한 이후 로보틱스 협력 기대가 하반기까지 이어지는 흐름.', tags:[{l:'로봇',c:'tr'},{l:'젠슨황 효과',c:'tb'},{l:'코스닥',c:'tgr'}]},
-  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', rsi:53, macd:'매수', score:78, reason:'젠슨 황 4월 두산로보틱스 연구센터 방문 이력 등 엔비디아와의 협력 기대 지속. 로봇 테마 하반기 모멘텀 유효.', tags:[{l:'로봇',c:'tr'},{l:'엔비디아 협력',c:'tb'},{l:'코스닥',c:'tgr'}]},
-  {name:'SK이노베이션', code:'096770', market:'kospi', sector:'2차전지', rsi:46, macd:'중립', score:77, reason:'이란 종전 합의로 국제유가 3개월래 최저 수준까지 하락, 정제마진 개선 기대. 배터리 사업 모멘텀도 병행.', tags:[{l:'유가 3개월래 최저',c:'tg'},{l:'정제마진 개선',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'HMM', code:'011200', market:'kospi', sector:'조선·방산', rsi:49, macd:'중립', score:75, reason:'19일 호르무즈 해협 정식 개방 서명 예정. 해운 물동량 정상화 기대가 공식화 단계에 근접.', tags:[{l:'호르무즈 개방 임박',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'후성', code:'093370', market:'kospi', sector:'반도체', rsi:60, macd:'매수', score:78, reason:'연기금 매수 기조 유지. 반도체 소재(불화수소)·2차전지 소재 이중 테마로 수급 안정적.', tags:[{l:'연기금 매수',c:'tr'},{l:'반도체 소재',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', rsi:52, macd:'매수', score:81, reason:'16일 롤스로이스 SMR이 스웨덴 차세대 원전 공급업체로 선정되며 협력 수혜 기대 부각. 애널리스트 21명 전원 매수 의견, 평균 목표가 대비 +34% 상승여력. 전력인프라 테마 내 평가 1위.', tags:[{l:'원전·SMR',c:'tpu'},{l:'롤스로이스 협력기대',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', rsi:58, macd:'매수', score:88, reason:'이란 종전 합의로 불확실성 해소 + 코스피 반등 지속 기대. HBM 펀더멘털 이상 없어. 이번 주 FOMC(18일) 전까지 반등 모멘텀 유효.', tags:[{l:'반도체',c:'tr'},{l:'HBM',c:'tr'},{l:'이란종전 수혜',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', rsi:52, macd:'매수', score:82, reason:'이란 종전 + 코스피 반등. 블랙먼데이 급락 후 회복 중. AI 반도체 수요 구조적 성장 불변.', tags:[{l:'반도체',c:'tr'},{l:'낙폭과대 회복',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'두산테스나', code:'131970', market:'kosdaq', sector:'반도체', rsi:70, macd:'매수', score:89, reason:'연기금 14일 이상 연속 순매수. 반도체 후공정 강세 지속. 이번 주도 수급 안정적.', tags:[{l:'연기금 연속매수',c:'tr'},{l:'반도체 후공정',c:'tr'},{l:'코스닥',c:'tgr'}]},
+  {name:'이오테크닉스', code:'039030', market:'kosdaq', sector:'반도체', rsi:65, macd:'매수', score:85, reason:'연기금 순매수 지속. 반도체 레이저 장비 독점. 이란 종전으로 시장 불확실성 해소, 반등 가속 기대.', tags:[{l:'연기금 매수',c:'tb'},{l:'반도체 장비',c:'tr'},{l:'코스닥',c:'tgr'}]},
+  {name:'한미반도체', code:'042700', market:'kospi', sector:'반도체', rsi:55, macd:'매수', score:82, reason:'블랙먼데이 급락 후 회복 중. HBM 패키징 장비 독점. 이란 종전 + 코스피 반등으로 추가 상승 기대.', tags:[{l:'반도체 장비',c:'tr'},{l:'HBM',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', rsi:60, macd:'매수', score:86, reason:'연기금 순매수 지속. 이란 종전으로 에너지 불확실성 해소, AI 데이터센터 전력 수요 구조적 성장 부각.', tags:[{l:'연기금 매수',c:'tb'},{l:'AI 데이터센터',c:'tb'},{l:'이란종전 수혜',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'효성중공업', code:'298040', market:'kospi', sector:'AI·데이터센터', rsi:55, macd:'매수', score:80, reason:'연기금 순매수. 변압기 테마 핵심주. 이란 종전으로 에너지 수급 안정화, 전력 인프라 재부각.', tags:[{l:'연기금 매수',c:'tb'},{l:'변압기',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', rsi:52, macd:'매수', score:80, reason:'이란 종전으로 방산 단기 모멘텀 약화 우려 있으나 韓-UAE 350억달러 협력 + 우주항공 장기 성장 불변. 조정 시 매수.', tags:[{l:'방산',c:'tpu'},{l:'韓-UAE 협력',c:'tb'},{l:'우주항공',c:'tor'},{l:'코스피',c:'tgr'}]},
+  {name:'현대로템', code:'064350', market:'kospi', sector:'조선·방산', rsi:50, macd:'매수', score:76, reason:'韓-UAE 방산 협력 수혜. 이란 종전 후에도 중동 재건·방위력 강화 수요 지속 전망.', tags:[{l:'방산',c:'tpu'},{l:'韓-UAE 협력',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', rsi:60, macd:'매수', score:83, reason:'스페이스X IPO 상장 후 우주항공 테마 지속. 미국 자회사 스페이스X·NASA 실제 공급망. 이란 종전 후 글로벌 리스크 해소로 성장주 재부각.', tags:[{l:'스페이스X',c:'tor'},{l:'우주항공',c:'tor'},{l:'코스닥',c:'tgr'}]},
+  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', rsi:48, macd:'매수', score:76, reason:'블랙먼데이 급락 후 반등 구간. 이란 종전으로 시장 불확실성 해소, 성장주 로봇 테마 재부각 기대.', tags:[{l:'로봇',c:'tr'},{l:'낙폭과대 회복',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', rsi:50, macd:'매수', score:74, reason:'이란 종전 + 글로벌 리스크 해소로 성장주 반등. AI 밸류체인 로봇 테마 장기 성장 스토리 유효.', tags:[{l:'로봇',c:'tr'},{l:'AI 밸류체인',c:'tb'},{l:'코스닥',c:'tgr'}]},
+  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', rsi:50, macd:'매수', score:74, reason:'원전 테마. 이란 종전 후 에너지 수급 재편 과정에서 원전 수요 장기 성장 불변.', tags:[{l:'원전',c:'tpu'},{l:'에너지 재편',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'SK이노베이션', code:'096770', market:'kospi', sector:'2차전지', rsi:45, macd:'매수', score:78, reason:'이란 종전 합의로 유가 3% 급락. 정제마진 개선 + 배터리 사업 수혜. 에너지 섹터 반등 주목.', tags:[{l:'이란종전 수혜',c:'tg'},{l:'유가하락',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'HMM', code:'011200', market:'kospi', sector:'조선·방산', rsi:48, macd:'매수', score:77, reason:'이란 종전으로 호르무즈 해협 개방! 수에즈 운하 경유 해운 물동량 정상화 기대. 해운주 직접 수혜.', tags:[{l:'이란종전 직접수혜',c:'tg'},{l:'호르무즈 개방',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'후성', code:'093370', market:'kospi', sector:'반도체', rsi:62, macd:'매수', score:78, reason:'연기금 7일 이상 연속 순매수. 반도체 소재(불화수소) + 2차전지 소재 이중 테마. 이란 종전 후 시장 안정화 수혜.', tags:[{l:'연기금 연속매수',c:'tr'},{l:'반도체 소재',c:'tb'},{l:'코스피',c:'tgr'}]},
 ];
 
 const LONG = [
-  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', score:95, horizon:'2~3년', upside:'+30~50%', reason:'HBM 시장 독점적 지위. 외국인 수급 복귀 + 100조 주주환원 검토설로 장기 매력도 부각.', point:'매 조정 시 분할 매수. 일부 증권사 목표가 380만원 상향.', tags:[{l:'반도체',c:'tr'},{l:'HBM 1위',c:'tr'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'삼성전기', code:'009150', market:'kospi', sector:'AI·데이터센터', score:88, horizon:'1~2년', upside:'+20~40%', reason:'올해 700% 폭등에도 외국인·초고수 투자자 계속 매수 중. AI 서버 MLCC·기판 수요가 단기 테마가 아닌 구조적 성장으로 평가받는 국면.', point:'단기 급등 부담은 있으나 추세 자체는 견조. 목표가 300만원 상향 의견 참고.', tags:[{l:'AI 서버 부품',c:'tb'},{l:'올해 최대 급등주',c:'tr'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', score:86, horizon:'2~3년', upside:'+25~45%', reason:'방산 수출 + 우주항공 이중 모멘텀. 이란 종전으로 단기 방산 모멘텀은 둔화될 수 있으나 중동 재건 수요와 우주항공 사업 확장은 장기적으로 유효.', point:'방산·우주 투트랙 성장주. 단기 조정은 오히려 진입 기회로 평가.', tags:[{l:'방산',c:'tpu'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', score:84, horizon:'2~4년', upside:'+45~75%', reason:'엔비디아 젠슨 황과의 협력 관계 지속(연구센터 방문 등). 올해 로봇주 평균 155% 급등, 하반기 피지컬 AI 확산 기대.', point:'장기 성장성 높지만 변동성 큼. 분할 매수 권장.', tags:[{l:'로봇',c:'tr'},{l:'엔비디아 협력',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'삼성SDI', code:'006400', market:'kospi', sector:'2차전지', score:82, horizon:'1~3년', upside:'+25~45%', reason:'AI 데이터센터 ESS 수요 + 전고체 배터리 2027년 양산 예정. 유가 안정으로 원가 부담도 일부 완화.', point:'전고체 배터리 상용화 시점이 핵심 변수. 장기 분할 매수 적합.', tags:[{l:'2차전지',c:'tb'},{l:'전고체',c:'tpu'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', score:83, horizon:'1~2년', upside:'+35~65%', reason:'스페이스X가 시총 2조 달러를 넘기며 안정적으로 거래 중. 국내에서 스페이스X 공모주 배정이 막힌 만큼 관련 국내 협력사로 관심 이동 가능성.', point:'스페이스X 주가 변동성에 동반 영향받을 수 있어 소액 분산 투자 권장.', tags:[{l:'스페이스X 상장완료',c:'tor'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', score:87, horizon:'1~2년', upside:'+20~35%', reason:'15일에도 +4.34% 오르며 전력설비 테마 강세 흐름 그대로 유지. 글로벌 변압기 수주 호황이 2028년까지 이어질 것으로 전망, AI 데이터센터발 전력 인프라 수요의 핵심 수혜주.', point:'시총 42조원대 대형주로 변동성은 상대적으로 낮은 편. 조정 구간 분할 매수 적합.', tags:[{l:'AI 인프라',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', score:95, horizon:'2~3년', upside:'+40~60%', reason:'HBM 시장 독점적 지위. AI 데이터센터 수요 2030년까지 구조적 성장.', point:'매 조정 시 분할 매수. 목표주가 3,200,000~3,500,000원.', tags:[{l:'반도체',c:'tr'},{l:'HBM 1위',c:'tr'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', score:90, horizon:'1~2년', upside:'+25~35%', reason:'글로벌 변압기 수주 2028년까지 호황. AI 데이터센터 전력 인프라 필수 기업.', point:'조정 구간 매수 기회. 증권가 목표주가 평균 1,398,000원.', tags:[{l:'AI 인프라',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', score:88, horizon:'2~3년', upside:'+30~50%', reason:'방산 수출 + 우주항공 이중 모멘텀. 스페이스X IPO로 우주 산업 구조적 성장.', point:'방산·우주 투트랙 성장주. 조선·방산·원전 테마 핵심.', tags:[{l:'방산',c:'tpu'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', score:85, horizon:'2~4년', upside:'+50~80%', reason:'K-휴머노이드 얼라이언스 참여. 협동로봇 글로벌 수주 확대.', point:'장기 성장성 높지만 변동성 큼. 분할 매수 권장.', tags:[{l:'로봇',c:'tr'},{l:'성장주',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'삼성SDI', code:'006400', market:'kospi', sector:'2차전지', score:83, horizon:'1~3년', upside:'+30~50%', reason:'AI 데이터센터 ESS 수요 + 전고체 배터리 2027년 양산 예정.', point:'전고체 배터리 상용화 시점이 핵심. 장기 분할 매수 적합.', tags:[{l:'2차전지',c:'tb'},{l:'전고체',c:'tpu'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', score:82, horizon:'1~2년', upside:'+40~70%', reason:'스페이스X 실제 공급망 종목. IPO 이후 우주 산업 본격 성장기 진입.', point:'스페이스X IPO 전후 변동성 클 수 있음. 소액 분산 투자 권장.', tags:[{l:'스페이스X',c:'tor'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
 ];
 
 const SECTORS = [
-  {icon:'🏦', name:'FOMC·워시 매파적 동결', desc:'18일 새벽(한국시간) 케빈 워시 신임 연준 의장 첫 FOMC에서 기준금리 3.50~3.75% 4연속 동결. 완화 편향 문구 삭제, 점도표 중간값 3.4%→3.8% 상향, 위원 절반이 연내 인상 전망. 시장은 매파적으로 해석, 미 증시는 신임 의장 데뷔날 기준 1994년 이후 최악 낙폭.', stocks:['삼성전자','SK하이닉스'], momentum:'⚠️ 단기 변동성 주의', risk:'중간'},
-  {icon:'🕊', name:'이란 종전 공식 서명(19일)', desc:'미·이란 평화협정이 내일(19일) 스위스에서 정식 서명될 예정. 호르무즈 해협 정상화가 공식 단계로 진입하며 국제유가는 3개월래 최저 수준. HMM(해운)·SK이노베이션(정유) 직접 수혜, 다만 방산주는 단기 모멘텀 둔화 우려.', stocks:['HMM','SK이노베이션','한화에어로스페이스'], momentum:'✅ 서명 임박', risk:'낮음'},
-  {icon:'💾', name:'반도체·HBM', desc:'17일 외국인 매수가 복귀하며 코스피를 8864 사상 최고치로 끌어올린 핵심 동력. 원익IPS는 외국인+연기금 순매수 동시 포착, 두산테스나는 AI·북미 고객사 확보로 체질 개선 중이라는 평가.', stocks:['SK하이닉스','삼성전자','두산테스나','원익IPS'], momentum:'↗ 외국인 복귀', risk:'중간'},
-  {icon:'⚡', name:'AI 데이터센터·전력·부품', desc:'삼성전기가 올해 코스피 최고 상승률(700%↑)을 기록하며 AI 서버 부품(MLCC·기판) 테마의 새로운 주도주로 부각. HD현대일렉트릭·LS일렉트릭 등 전력 인프라株도 강세와 연기금 매수 지속.', stocks:['삼성전기','HD현대일렉트릭','LS일렉트릭','효성중공업'], momentum:'↗ 신규 주도주 부각', risk:'낮음'},
-  {icon:'🛡', name:'조선·방산·원전', desc:'이란 종전 공식 서명을 앞두고 단기 방산 모멘텀 둔화 우려. 다만 중동 재건 수요·韓 방산 수출 계약은 장기적으로 유지될 전망. 두산에너빌리티는 16일 롤스로이스 SMR의 스웨덴 차세대 원전 수주 소식으로 협력 수혜 기대가 새로 부각.', stocks:['한화에어로스페이스','현대로템','두산에너빌리티'], momentum:'⚠️ 단기 조정 가능', risk:'중간'},
-  {icon:'🚀', name:'우주항공·스페이스X', desc:'스페이스X 6월 12일 나스닥 상장 완료(시총 2조 달러 이상). 국내 기관(미래에셋증권)이 공모주 물량을 배정받지 못한 이슈가 부각되며, 상장 후 실물 매수나 국내 관련주로 관심이 이동할 가능성.', stocks:['켄코아에어로스페이스','한화에어로스페이스'], momentum:'✅ 상장 완료, 거래중 강세', risk:'중간'},
-  {icon:'🤖', name:'로봇·휴머노이드', desc:'올해 대형 로봇주 평균 155% 급등. 엔비디아 젠슨 황 CEO의 6월 방한(로봇 협력 강조, 두산로보틱스 연구센터 방문 등) 이후 하반기 피지컬 AI 확산 기대가 유지되는 흐름.', stocks:['레인보우로보틱스','두산로보틱스'], momentum:'↗ 하반기 기대 지속', risk:'높음'},
+  {icon:'🕊', name:'이란 종전 수혜', desc:'🔥 트럼프, 미-이란 종전 합의 발표! 호르무즈 해협 개방 + 미 해군 봉쇄 해제. 106일 만에 종전. 유가 3% 급락, 글로벌 리스크 해소. HMM(해운)·SK이노베이션(정유) 직접 수혜.', stocks:['HMM','SK이노베이션','한화에어로스페이스'], momentum:'🔥 오늘 최대 이슈', risk:'낮음'},
+  {icon:'💾', name:'반도체·HBM', desc:'✅ 이란 종전으로 글로벌 불확실성 해소 + 코스피 반등 지속. 연기금 두산테스나 연속 매수. FOMC(18일) 전까지 반등 모멘텀 유효.', stocks:['SK하이닉스','두산테스나','이오테크닉스','한미반도체'], momentum:'↗ 반등 가속', risk:'중간'},
+  {icon:'⚡', name:'AI 데이터센터·전력', desc:'✅ 이란 종전으로 에너지 불확실성 해소, AI 데이터센터 전력 수요 구조적 성장 재부각. LS일렉트릭 연기금 매수 지속.', stocks:['LS일렉트릭','효성중공업','HD현대일렉트릭'], momentum:'↗ 구조적 성장', risk:'낮음'},
+  {icon:'🛡', name:'조선·방산', desc:'⚠️ 이란 종전으로 단기 방산 모멘텀 약화 우려. 그러나 韓-UAE 350억달러 방산 협력 + 중동 재건 수요 장기 지속. 단기 조정 시 매수 기회.', stocks:['한화에어로스페이스','현대로템','한국항공우주'], momentum:'⚠️ 단기 조정 주의', risk:'중간'},
+  {icon:'🚀', name:'우주항공·스페이스X', desc:'✅ 스페이스X IPO 상장 완료. 이란 종전 후 글로벌 리스크 해소로 성장주 재부각. 켄코아에어로스페이스 지속 주목.', stocks:['켄코아에어로스페이스','한화에어로스페이스'], momentum:'↗ 성장주 재부각', risk:'중간'},
+  {icon:'🤖', name:'로봇·휴머노이드', desc:'↗ 이란 종전 + 글로벌 리스크 해소로 성장주 반등. 로봇 테마 펀더멘털 변화 없어 블랙먼데이 이후 회복 가속 기대.', stocks:['레인보우로보틱스','두산로보틱스'], momentum:'↗ 성장주 반등', risk:'높음'},
 ];
 
 const REPORT = {
-  date: '2026년 6월 18일 (목)',
-  updated: '오늘 업데이트',
+  date: '2026년 6월 15일 (월)',
+  updated: '오전 8:30',
   global: [
-    {label:'FOMC 결과', value:'워시 의장 첫 회의 — 3.50~3.75% 동결, 매파적 평가', cls:'down'},
-    {label:'점도표', value:'중간값 3.4%→3.8% 상향, 절반이 연내 인상 전망', cls:'down'},
-    {label:'이란 종전 서명', value:'내일(19일) 스위스 정식 서명 예정', cls:'up'},
-    {label:'WTI 유가', value:'3개월래 최저 수준', cls:'up'},
-    {label:'미 증시(17일)', value:'워시 기자회견 중 S&P500 낙폭 확대, 매파 신호 충격', cls:'down'},
-    {label:'스페이스X', value:'나스닥 상장 완료, $135→$200대 강세 거래중', cls:'up'},
+    {label:'이란 종전 합의', value:'트럼프 발표 — 106일 만에 종전!', cls:'up'},
+    {label:'호르무즈 해협', value:'전면 개방 합의', cls:'up'},
+    {label:'WTI 유가', value:'$84.88 (-3.2% 급락)', cls:'up'},
+    {label:'뉴욕증시', value:'다우+0.7% S&P+0.5% 나스닥+0.3%', cls:'up'},
+    {label:'원달러 환율', value:'1,513원 (이란 종전 후 소폭 하락)', cls:'up'},
+    {label:'이번 주 FOMC', value:'6월 18일 — 금리 결정 주목', cls:'down'},
   ],
   domestic: [
-    {label:'코스피(17일 종가)', value:'8,864.24 사상 최고치 (+1.58%)', cls:'up'},
-    {label:'외국인 수급', value:'17일 9,923억 순매도로 전환(3일 연속 매수 후 차익실현)', cls:'down'},
-    {label:'코스닥', value:'제약·바이오 강세 (코오롱티슈진·알테오젠·HLB 등)', cls:'up'},
-    {label:'종목 차별화', value:'신고가 1508개·신저가 1763개 동시 발생, 쏠림 완화', cls:'flat'},
-    {label:'골드만삭스', value:'코스피 목표가 1만2000으로 상향', cls:'up'},
+    {label:'코스피', value:'이란 종전 + 반등 지속 기대', cls:'up'},
+    {label:'주도 섹터', value:'해운·정유·반도체·성장주', cls:'up'},
+    {label:'이번 주 이벤트', value:'FOMC(18일) + 이란 서명식(19일)', cls:'flat'},
+    {label:'시장 심리', value:'불안→안도 전환', cls:'up'},
   ],
   supply: [
-    {label:'외국인 순매수(17일)', value:'삼성전자우·원익IPS·리노공업·현대건설', cls:'up'},
-    {label:'연기금 순매수', value:'원익IPS·삼성전기·신한지주·두산퓨얼셀', cls:'up'},
-    {label:'외국인 순매도', value:'SK하이닉스(17일 차익실현분)', cls:'down'},
-    {label:'주목 신규주', value:'삼성전기 — 올해 700% 급등, 외국인 집중매수 지속', cls:'up'},
+    {label:'이란 종전 직접수혜', value:'HMM(해운)·SK이노베이션(정유)', cls:'up'},
+    {label:'연기금 지속매수', value:'두산테스나·LS일렉트릭·후성', cls:'up'},
+    {label:'방산 단기 주의', value:'이란 종전으로 모멘텀 약화 우려', cls:'down'},
+    {label:'성장주 재부각', value:'이란 리스크 해소 → 로봇·우주항공', cls:'up'},
   ],
   themes: [
-    {name:'🏦 FOMC 매파적 동결', badge:'rb-flat', comment:'워시 의장 데뷔 FOMC에서 동결은 예상대로였으나 점도표 상향·완화문구 삭제로 매파 신호 확인. 다만 실적장세인 만큼 금리 영향은 제한적이라는 평가도 공존.'},
-    {name:'🕊 이란 종전 정식 서명 임박', badge:'rb-up', comment:'19일 스위스 서명식 예정. 호르무즈 해협 정상화가 공식화 단계로, 해운·정유 수혜 기대가 구체화되는 국면.'},
-    {name:'💾 반도체 외국인 복귀', badge:'rb-up', comment:'17일 외국인 매수 복귀로 코스피 신고가 견인. 원익IPS는 외국인·연기금 동시 매수 포착, 수급 신호 강함.'},
-    {name:'⚡ 삼성전기 신규 주도주', badge:'rb-up', comment:'올해 코스피 최고 상승률 700%. AI 서버 부품 수요가 일시적 테마가 아닌 구조적 성장으로 재평가되는 흐름.'},
-    {name:'⚠️ 방산 단기 조정 가능성', badge:'rb-flat', comment:'이란 종전 공식화로 방산 단기 모멘텀 둔화 우려. 장기 수요(중동 재건, 韓 방산 수출)는 유지되는 만큼 조정 시 매수 시각도 있음.'},
-    {name:'🚀 스페이스X 상장 후 강세', badge:'rb-up', comment:'공모가 대비 50% 가까이 상승하며 거래중. 국내 공모주 배정 실패 논란 속, 상장 후 실물 매수나 국내 관련주로 관심 이동 가능성.'},
+    {name:'🕊 이란 종전 합의', badge:'rb-up', comment:'트럼프, 미-이란 종전 협상 타결 발표. 호르무즈 해협 개방 + 미 해군 봉쇄 해제. 유가 3% 급락, 해운 물동량 정상화 기대. HMM·SK이노베이션 직접 수혜.'},
+    {name:'💾 반도체 반등 가속', badge:'rb-up', comment:'이란 종전으로 글로벌 불확실성 해소. SK하이닉스·삼성전자 블랙먼데이 급락 후 반등 가속 기대. 연기금 두산테스나 연속 매수 지속.'},
+    {name:'⚡ AI 데이터센터·전력', badge:'rb-up', comment:'이란 종전으로 에너지 수급 안정화 + AI 전력 수요 구조적 성장 재부각. LS일렉트릭 연기금 매수 지속.'},
+    {name:'⚠️ 방산 단기 조정', badge:'rb-flat', comment:'이란 종전으로 방산 단기 모멘텀 약화 우려. 그러나 韓-UAE 350억달러 협력 + 중동 재건 수요 장기 지속. 조정 시 매수 기회.'},
+    {name:'🚀 성장주 재부각', badge:'rb-up', comment:'이란 리스크 해소 → 글로벌 성장주 반등. 로봇·우주항공 테마 재부각. 켄코아에어로스페이스·레인보우로보틱스 주목.'},
   ],
   stocks: [
-    {name:'삼성전기', comment:'올해 코스피 전체 1위 상승률(700%). 외국인·초고수 투자자 집중 매수 지속, 일부 목표가 300만원 상향 의견.'},
-    {name:'SK하이닉스', comment:'외국인 복귀로 코스피 신고가 견인주. 17일 일시 차익실현 있었지만 추세 자체는 유효.'},
-    {name:'원익IPS', comment:'외국인·연기금 순매수 동시 등장. 반도체 장비 업황 개선 기대와 수급이 같이 움직이는 보기 드문 신호.'},
-    {name:'두산테스나', comment:'AI·북미 고객사 확보, 종합 테스트 솔루션 기업으로 체질 개선 중이라는 증권가 긍정 평가.'},
-    {name:'켄코아에어로스페이스', comment:'스페이스X 상장 완료 후 강세 지속. 국내 공모주 배정 실패 이슈가 오히려 관련 국내주 관심을 키울 가능성.'},
-    {name:'한화에어로스페이스', comment:'이란 종전 서명으로 단기 방산 모멘텀은 둔화 우려. 우주항공·중동 재건 수요는 장기적으로 유지.'},
-    {name:'HMM', comment:'19일 호르무즈 해협 정식 개방 서명 예정, 해운 수혜가 구체화 단계로 진입.'},
+    {name:'HMM', comment:'이란 종전으로 호르무즈 해협 개방! 해운 물동량 정상화 직접 수혜. 오늘 가장 주목할 종목.'},
+    {name:'SK이노베이션', comment:'유가 3% 급락으로 정제마진 개선 기대. 이란 종전 에너지 수혜주. 배터리 사업 모멘텀도 유효.'},
+    {name:'SK하이닉스', comment:'이란 종전 + 글로벌 불확실성 해소로 반등 가속 기대. FOMC(18일) 전까지 모멘텀 유효.'},
+    {name:'두산테스나', comment:'연기금 연속 순매수 지속. 반도체 후공정 강세. 이번 주도 수급 안정적.'},
+    {name:'LS일렉트릭', comment:'이란 종전으로 에너지 불확실성 해소, AI 전력 수요 구조적 성장 재부각. 연기금 매수 지속.'},
+    {name:'한화에어로스페이스', comment:'이란 종전으로 단기 방산 조정 가능성. 그러나 韓-UAE 협력 + 우주항공 장기 성장 불변. 조정 시 매수.'},
+    {name:'켄코아에어로스페이스', comment:'이란 리스크 해소 후 성장주 재부각. 스페이스X IPO 상장 이후 우주항공 테마 장기 지속.'},
   ],
   risk: [
-    'FOMC 매파적 동결로 단기 변동성 확대 가능 — 점도표 상향이 추세적 우려로 번질지 주시 필요',
-    '이란 종전 정식 서명(19일) 전까지는 완전한 확신은 금물, 서명 무산 시 되돌림 가능',
-    '신고가 1508개·신저가 1763개 동시 발생 — 종목별 차별화가 심해지는 국면, 추격매수 주의',
-    '17일 외국인 9,923억 순매도 전환 — 차익실현 매물이 단기 더 나올 수 있음',
+    'FOMC 6월 18일 — 금리 인상 시그널 시 시장 충격 가능',
+    '이란 종전 서명식 6월 19일 — 공식 서명 전까지 불확실성',
+    '방산주 단기 모멘텀 약화 — 이란 종전으로 중동 긴장 완화',
+    'G7 정상회담(15~17일) — 글로벌 무역·관세 이슈 재부각 가능',
   ],
-  tomorrow: '19일(금) 이란-미국 정식 서명식이 최대 변수. 서명이 무리없이 진행되면 해운·정유 수혜가 한 번 더 부각될 수 있고, 반대로 잡음이 생기면 안도 랠리가 일부 되돌려질 수 있음. FOMC 매파 신호는 이미 상당 부분 선반영된 만큼 추가 충격은 제한적이라는 시각이 많으나, 점도표 상향이 이어질지는 계속 확인 필요.',
-  aiOpinion: `오늘은 어젯밤 FOMC 결과가 가장 큰 이슈였어요.
+  tomorrow: 'FOMC(18일) 금리 결정이 이번 주 최대 변수. 동결 시 성장주·반도체 추가 반등, 인상 시 재조정. 이란 서명식(19일) 전까지 해운·정유 수혜 지속. 중동 재건 수요로 방산 장기 모멘텀 유효.',
+  aiOpinion: `오늘은 이란 종전 합의라는 초대형 이벤트가 터졌어요.
 
-📌 FOMC 매파적 동결 — 예상은 맞혔지만 분위기는 안 좋았어요: 워시 의장 첫 회의에서 동결 자체는 다들 예상했던 대로였는데, 점도표가 3.4%에서 3.8%로 올라가고 완화적인 문구가 사라지면서 "매파적"이라는 평가가 붙었어요. 미국 증시도 기자회견 중에 더 떨어졌고요. 다만 국내 증권가에서는 "이미 시장이 어느 정도 반영했고, 지금 랠리는 실적 기반이라 금리 영향은 제한적"이라는 의견도 많아서, 패닉보다는 변동성 정도로 보는 분위기예요.
+📌 이란 종전 합의 — 오늘 가장 중요한 뉴스: 호르무즈 해협이 열리고 미 해군 봉쇄가 해제됐어요. 유가 3% 급락했어요. 직접 수혜는 HMM(해운)과 SK이노베이션(정유)이에요. 오늘 장 초반 가장 강하게 움직일 섹터예요.
 
-📌 이란 종전 — 내일이 진짜 분수령: 합의 발표만 있었던 단계에서 내일(19일) 스위스에서 정식 서명까지 가는 거라, 이게 무사히 끝나면 호르무즈 해협 정상화가 공식화돼요. HMM·SK이노베이션처럼 직접 수혜주는 계속 주목할 만하고, 반대로 방산주는 종전이 굳어질수록 단기 모멘텀이 약해질 수 있어요.
+📌 방산주 — 주의 필요: 이란 종전으로 중동 긴장이 완화되면 단기 방산 모멘텀이 약해질 수 있어요. 한화에어로스페이스·현대로템은 단기 조정 가능성이 있지만, 韓-UAE 350억달러 협력 + 중동 재건 수요는 장기 지속이라 조정 시 오히려 매수 기회예요.
 
-📌 오늘 가장 눈에 띄는 신규 종목 — 삼성전기: 올해 코스피에서 가장 많이 오른 종목(700%)인데도 외국인이 계속 사고 있어요. AI 서버에 들어가는 부품(MLCC·기판) 수요가 일시적인 테마가 아니라 구조적인 성장으로 재평가받는 분위기라, 이번 업데이트에서 새로 추가했어요.
+📌 반도체·성장주 재부각: 이란 리스크가 해소되면서 그동안 눌렸던 성장주들이 반등할 수 있어요. SK하이닉스, 레인보우로보틱스, 켄코아에어로스페이스 같은 성장주들이 이번 주 강세 후보예요.
 
-📌 알아두면 좋은 것: 코스피가 신고가를 새로 쓰는 동시에 신저가 종목도 1700개 넘게 나왔어요. 지수만 보면 다 오르는 것 같아도 실제로는 종목별로 꽤 갈리고 있다는 뜻이라, 추격매수보다는 수급(외국인·연기금)이 같이 들어오는 종목 위주로 보는 게 안전해요.`
+📌 이번 주 가장 중요한 이벤트: FOMC 6월 18일 (목). 금리 동결이면 반등 가속, 인상이면 재조정이에요. FOMC 결과 나오기 전까지는 포지션 크게 늘리기보다 분할 접근이 안전해요.
+
+📌 알아두면 좋은 것: 이란 종전 서명식은 6월 19일(금)이에요. 공식 서명 전까지 완전한 확신은 금물이에요. 분할 매수로 접근하세요.`
 };
 
 let allStocks = [], longStocks = [], curMode = 'danta', curFilter = 'all', TOKEN = '';
@@ -364,7 +360,7 @@ function renderReport() {
       </div>
       <div class="report-card">
         <h3>🔥 오늘 주도 테마</h3>
-        ${REPORT.themes.map(t=>`<div class="stock-comment"><div class="sc-name">${t.name} <span class="report-badge ${t.badge}">${t.badge==='rb-up'?'강세':t.badge==='rb-down'?'약세':'중립'}</span></div><div class="sc-text">${t.comment}</div></div>`).join('')}
+        ${REPORT.themes.map(t=>`<div class="stock-comment"><div class="sc-name">${t.name} <span class="report-badge ${t.badge}">${t.badge==='rb-up'?'강세':'중립'}</span></div><div class="sc-text">${t.comment}</div></div>`).join('')}
       </div>
       <div class="report-card">
         <h3>🎯 종목별 코멘트</h3>
@@ -393,6 +389,7 @@ async function init() {
   try {
     TOKEN = await getToken();
 
+    // 단타 종목 실시간
     const dantaResults = [];
     for (const s of DANTA_BASE) {
       const live = await fetchPrice(s.code);
@@ -401,6 +398,7 @@ async function init() {
     }
     allStocks = dantaResults;
 
+    // 장투 종목 실시간
     const longResults = [];
     for (const s of LONG) {
       const live = await fetchPrice(s.code);
@@ -414,7 +412,7 @@ async function init() {
     if (ss && ss.price) { document.getElementById('h-ss').textContent=ss.price.toLocaleString()+'원'; document.getElementById('h-ss').className='mv '+(ss.change>=0?'up':'down'); }
     if (sk && sk.price) { document.getElementById('h-sk').textContent=sk.price.toLocaleString()+'원'; document.getElementById('h-sk').className='mv '+(sk.change>=0?'up':'down'); }
     document.getElementById('h-time').textContent = new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})+' 실시간';
-    note.innerHTML = '✅ 한투 API 실시간 데이터 연동 완료 — 6월 18일 업데이트 기준';
+    note.innerHTML = '✅ 한투 API 실시간 데이터 연동 완료 — 6월 12일 기준';
     note.className = 'note';
   } catch(e) {
     note.innerHTML = '⚠️ 실시간 연동 실패 — 새로고침 해주세요';
