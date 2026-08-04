@@ -79,9 +79,12 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 .rb-up { background: #fff1f2; color: #b91c1c; }
 .rb-down { background: #eff6ff; color: #1d4ed8; }
 .rb-flat { background: #f3f4f6; color: #6b7280; }
+.alert-bar { background: linear-gradient(90deg,#dc2626,#ef4444); color:#fff; font-size:12px; font-weight:700; padding: 8px 20px; text-align:center; letter-spacing:0.5px; }
 </style>
 </head>
 <body>
+
+<div class="alert-bar">🔥 8/5 오늘 역사적 급등 중 — 코스피 +1,000p 이상 · SK하이닉스 장중 +29% · 삼성전자 +26% · 추격 매수 주의!</div>
 
 <div class="header">
   <div class="logo">단타<span>AI</span></div>
@@ -125,136 +128,137 @@ body { font-family: -apple-system, 'Apple SD Gothic Neo', sans-serif; background
 const PROXY = 'https://dry-snowflake-ae3c.chltoal2.workers.dev';
 
 const DANTA_BASE = [
-  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', rsi:62, macd:'매수', score:92,
-   reason:'7월 코스피 -41% 폭락 장세에서 전력기기 3사 중 가장 강한 방어력. 반도체 급락 중 오히려 관심 집중. 올해 북미 빅테크 수주 1.2조 달성, 글로벌 데이터센터 전력 수요 IEA 전망 2030년 2.3배. CXMT 쇼크와 무관한 구조적 성장 섹터.',
-   tags:[{l:'반도체폭락 방어주',c:'tg'},{l:'AI 전력 수주',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', rsi:60, macd:'매수', score:90,
-   reason:'변압기 수주 2028년까지 호황. 반도체 대폭락 국면에서 대체 투자처로 자금 유입. K-전력기기 3사 영업이익 합계 3조원 전망(+38%). CXMT·메타 쇼크와 완전 무관.',
-   tags:[{l:'반도체폭락 방어주',c:'tg'},{l:'AI 인프라',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'한화오션', code:'042660', market:'kospi', sector:'조선·방산', rsi:58, macd:'매수', score:89,
-   reason:'7/30 반도체 역대급 하락장 속 나홀로 +6.3% 급등. 지정학적 긴장 지속 + 방산·조선 수주 모멘텀 유지. 기술주 조정 국면 대체 투자처로 매수세 집중. 비반도체 섹터 전환매매 핵심주.',
-   tags:[{l:'대폭락장 나홀로 급등',c:'tr'},{l:'조선·방산',c:'tpu'},{l:'코스피',c:'tgr'}]},
-  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', rsi:35, macd:'매수', score:87,
-   reason:'오늘(7/31) 2Q 공식 실적 발표 후 7.1% 급등. 영업이익 68조 확인, 에이전틱 AI 확산으로 2027년 이후 메모리 공급 부족 가능성 제시. 고점(35만8천) 대비 -40% 이상 낙폭과대. 해외 IB들 "비이성적 폭락" 평가.',
-   tags:[{l:'오늘 실적발표 급등',c:'tr'},{l:'낙폭과대 -40%',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', rsi:55, macd:'매수', score:86,
-   reason:'7/30 반도체 급락장에서 -0.99% 방어 성공. 원전·SMR 장기 수요 CXMT 쇼크와 무관. 삼성·SK 충청 240조 투자의 전력 인프라 수혜. 비반도체 방어주 역할 지속.',
-   tags:[{l:'반도체 급락 방어',c:'tg'},{l:'원전·SMR',c:'tpu'},{l:'코스피',c:'tgr'}]},
-  {name:'효성중공업', code:'298040', market:'kospi', sector:'AI·데이터센터', rsi:58, macd:'매수', score:84,
-   reason:'K-전력기기 3사 일원. 반도체 폭락 장세에서 상대적 강세 유지. AI 데이터센터 전력 인프라 구조적 수혜 지속.',
-   tags:[{l:'변압기',c:'tb'},{l:'반도체 폭락 방어',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', rsi:28, macd:'매수', score:83,
-   reason:'7/29 실적 발표 후 어닝쇼크(예상 하회, HBM4 출하 지연 우려)로 7/30 -5.64%(132만2천). 고점(291만7천) 대비 -55% 반 토막. 해외 IB 36명 전원 매수 의견, 목표가 평균 325만원(+146% 상승 여력). 단기 반등 기대 분할 접근.',
-   tags:[{l:'고점대비 -55%',c:'tg'},{l:'IB 전원 매수',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'NAVER', code:'035420', market:'kospi', sector:'AI·데이터센터', rsi:50, macd:'매수', score:82,
-   reason:'반도체 폭락 국면에서 비반도체 AI 플랫폼으로 관심 이동. 국민연금 순매수 기조 유지. AI 검색·클라우드 성장 스토리 CXMT 위협과 무관.',
-   tags:[{l:'비반도체 AI',c:'tb'},{l:'국민연금 매수',c:'tr'},{l:'코스피',c:'tgr'}]},
-  {name:'삼성전기', code:'009150', market:'kospi', sector:'AI·데이터센터', rsi:38, macd:'매수', score:80,
-   reason:'7/30 2Q 실적 영업이익 +107%(시장 예상 상회) 발표했지만 -14.58% 급락. 단기 급등 후 차익실현 물량. 하지만 AI 서버 MLCC 수요 구조적 성장 불변 — 낙폭과대 반등 관점.',
-   tags:[{l:'실적 호조에도 급락',c:'tg'},{l:'AI 서버 MLCC',c:'tb'},{l:'코스피',c:'tgr'}]},
-  {name:'현대로템', code:'064350', market:'kospi', sector:'조선·방산', rsi:55, macd:'매수', score:79,
-   reason:'반도체 폭락 구간 방산주 대체 투자처. 지정학적 긴장 지속으로 방산 수요 불변. 한화오션과 함께 조선·방산 섹터 자금 유입 수혜.',
-   tags:[{l:'방산',c:'tpu'},{l:'대체 투자처',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'두산테스나', code:'131970', market:'kosdaq', sector:'반도체', rsi:30, macd:'매수', score:78,
-   reason:'반도체 후공정 — 삼성전자·SK하이닉스 폭락에 동반 급락. 그러나 AI·북미 고객사 확보 중인 체질 개선 기업. 실적 펀더멘털 훼손 없는 수급 충격 급락으로 분할 매수 관점.',
-   tags:[{l:'반도체 후공정',c:'tr'},{l:'낙폭과대',c:'tg'},{l:'코스닥',c:'tgr'}]},
-  {name:'한미반도체', code:'042700', market:'kospi', sector:'반도체', rsi:30, macd:'매수', score:77,
-   reason:'HBM 패키징 장비 독점. 7월 폭락으로 대폭 하락. CXMT 추격이 현실화되더라도 HBM 패키징 기술 격차는 여전. 분할 매수 관점.',
-   tags:[{l:'HBM 장비',c:'tr'},{l:'낙폭과대',c:'tg'},{l:'코스피',c:'tgr'}]},
-  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', rsi:42, macd:'매수', score:76,
-   reason:'반도체 쏠림 해소 국면에서 로봇·피지컬 AI로 관심 이동 가능. CXMT 쇼크와 무관한 테마. 분기 실적 시즌 후 반도체 변동성 진정 시 성장주 반등 기대.',
-   tags:[{l:'로봇',c:'tr'},{l:'비반도체',c:'tg'},{l:'코스닥',c:'tgr'}]},
-  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', rsi:40, macd:'매수', score:74,
-   reason:'엔비디아 협력 기대. 반도체 쏠림 완화 시 피지컬 AI·로봇 테마 관심 이동 예상.',
-   tags:[{l:'로봇',c:'tr'},{l:'엔비디아 협력',c:'tb'},{l:'코스닥',c:'tgr'}]},
-  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', rsi:48, macd:'중립', score:73,
-   reason:'스페이스X 나스닥 상장 완료($200대). 반도체 변동성 장세에서 우주항공 상대적 안정. 반도체 섹터 이탈 자금 일부 유입 기대.',
-   tags:[{l:'스페이스X 협력',c:'tor'},{l:'우주항공',c:'tor'},{l:'코스닥',c:'tgr'}]},
-  {name:'SK이노베이션', code:'096770', market:'kospi', sector:'2차전지', rsi:44, macd:'중립', score:71,
-   reason:'에너지 섹터 반도체와 무관. 유가 안정 + 정제마진 개선. 반도체 쏠림 해소 시 에너지·화학 섹터 자금 유입 가능성.',
-   tags:[{l:'비반도체',c:'tg'},{l:'정제마진',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', rsi:65, macd:'매수', score:92,
+   reason:'어제(8/4) +9.25% 강세에 이어 오늘도 방산 순환매 지속 기대. 코스피 역사적 급등 속 반도체 차익 실현 자금이 방산으로 이동 중. 실적 대비 저평가 매력 부각. 오늘 장중 주도주 목록 4위 급부상.',
+   tags:[{l:'방산 순환매 핵심',c:'tr'},{l:'어제+9.25%',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'NAVER', code:'035420', market:'kospi', sector:'AI·데이터센터', rsi:60, macd:'매수', score:91,
+   reason:'오늘 인기 순위 4위 급등(53계단↑), +3.86% 강세. 반도체 쏠림 해소 국면에서 AI 플랫폼으로 자금 이동. 어제 +9.16% 급등. 국민연금 지속 매수. SK텔레콤 +11.46% 통신주 강세와 함께 비반도체 대형주 순환매 핵심.',
+   tags:[{l:'순환매 핵심',c:'tr'},{l:'오늘 인기4위↑53',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', rsi:63, macd:'매수', score:90,
+   reason:'어제 +7.83% 급등. 오늘 주도주 목록 6위. 순환매 확산 국면에서 원전·AI 데이터센터 전력 수요 수혜. 반도체 폭락 내내 방어주 역할을 했던 종목이 오늘은 공격적으로 오르는 흐름.',
+   tags:[{l:'어제+7.83%',c:'tr'},{l:'원전·순환매',c:'tpu'},{l:'코스피',c:'tgr'}]},
+  {name:'삼성전기', code:'009150', market:'kospi', sector:'AI·데이터센터', rsi:68, macd:'매수', score:89,
+   reason:'오늘 인기 3위. 프리마켓 +8% 강세 → 오늘 장중 반도체 부품주 동반 급등. 현재가 1,216,000원 (+2.96%). 어제 +7.83% 급등에 이어 오늘도 상승 모멘텀. 오늘 순환매에서 가장 주목받는 반도체 부품주.',
+   tags:[{l:'오늘 인기3위',c:'tr'},{l:'AI 서버 MLCC',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', rsi:75, macd:'매수', score:88,
+   reason:'오늘 역사적 급등 주도주 — 장중 +26.33%! 현재 241,500원. ⚠️ 이미 엄청 올랐음. 추격 매수보다 차익실현 물량 소화 후 눌림목 재진입 또는 단기 조정 시 단타 관점. 오늘 인기 1위.',
+   tags:[{l:'오늘+26% 역사적',c:'tr'},{l:'⚠️추격주의',c:'tgr'},{l:'코스피',c:'tgr'}]},
+  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', rsi:62, macd:'매수', score:87,
+   reason:'오늘 인기 9위(157계단↑). 현재가 195,500원 (+3.77%). AI 전력망 테마 + 순환매 확산. 어제 +1.95%에서 오늘 더 강해지는 흐름. 전선 테마(가온전선 +10.69%, 대원전선 +12.13%)와 함께 전력 인프라 섹터 주목.',
+   tags:[{l:'오늘 인기9위↑157',c:'tr'},{l:'AI 전력망',c:'tb'},{l:'코스피',c:'tgr'}]},
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', rsi:78, macd:'매수', score:86,
+   reason:'오늘 장중 +29.73% 상한가! 현재 1,605,000원. 외국인 2.6조 순매수. ⚠️ 상한가 도달 이미 → 추격 매수 매우 위험. 차익실현 물량 출회 예상. 내일 이후 눌림목 관점.',
+   tags:[{l:'장중+29% 상한가',c:'tr'},{l:'외인2.6조 매수',c:'tb'},{l:'⚠️추격위험',c:'tgr'}]},
+  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', rsi:62, macd:'매수', score:85,
+   reason:'오늘 주도주 7위(27계단↑). 코스닥 3거래일 연속 매수 사이드카 발동. 반도체 쏠림 해소 → 로봇·AI 소프트웨어로 자금 이동. 코스닥 바이오·로봇 강세 지속 중.',
+   tags:[{l:'오늘 주도주7위↑27',c:'tr'},{l:'코스닥 로봇 강세',c:'tb'},{l:'코스닥',c:'tgr'}]},
+  {name:'두산로보틱스', code:'454910', market:'kosdaq', sector:'로봇', rsi:58, macd:'매수', score:82,
+   reason:'코스닥 로봇 테마 강세 지속. 엔비디아 협력 기대. 반도체 쏠림 완화 → 코스닥 성장주 낙수효과 현실화 중.',
+   tags:[{l:'로봇',c:'tr'},{l:'코스닥 강세',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'가온전선', code:'000500', market:'kospi', sector:'AI·데이터센터', rsi:68, macd:'매수', score:84,
+   reason:'오늘 인기 10위(105계단↑), +10.69% 급등! AI 전력망 병목 테마 급부상. AI 데이터센터 전선 수요 급증. 대원전선도 +12.13%. 주맵 이벤트 테마 상위에 오른 신규 급등 테마.',
+   tags:[{l:'AI 전력망 테마',c:'tr'},{l:'오늘 인기10위↑105',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'한화오션', code:'042660', market:'kospi', sector:'조선·방산', rsi:60, macd:'매수', score:81,
+   reason:'7/30 나홀로 강세 이후 방산·조선 대체 투자처 역할 지속. 오늘 역사적 급등 속 수주 모멘텀 지속. 한화에어로스페이스와 함께 방산 테마 핵심.',
+   tags:[{l:'방산·조선',c:'tpu'},{l:'대체 투자처',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'한국항공우주', code:'047810', market:'kospi', sector:'조선·방산', rsi:66, macd:'매수', score:80,
+   reason:'어제 +11.16% 급등. 방산 순환매 핵심. 코스피 급등 국면에서 방산 섹터 강세 지속 기대.',
+   tags:[{l:'어제+11.16%',c:'tr'},{l:'방산',c:'tpu'},{l:'코스피',c:'tgr'}]},
+  {name:'HD현대일렉트릭', code:'267260', market:'kospi', sector:'AI·데이터센터', rsi:60, macd:'매수', score:79,
+   reason:'AI 데이터센터 전력 인프라 순환매. 전선 테마 강세와 함께 전력 인프라 섹터 전반 주목.',
+   tags:[{l:'AI 전력 인프라',c:'tb'},{l:'순환매',c:'tg'},{l:'코스피',c:'tgr'}]},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', rsi:55, macd:'매수', score:77,
+   reason:'스페이스X 협력. 코스닥 강세 기조 속 우주항공 테마 동반 부각. 대주전자재료 스페이스X 우주 태양광 소재 공급 순항 소식으로 우주항공 전반 관심.',
+   tags:[{l:'스페이스X 협력',c:'tor'},{l:'코스닥 강세',c:'tg'},{l:'코스닥',c:'tgr'}]},
+  {name:'두산테스나', code:'131970', market:'kosdaq', sector:'반도체', rsi:62, macd:'매수', score:76,
+   reason:'반도체 후공정 — 오늘 반도체 대형주 역사적 급등에 동반 상승. 코스닥 반도체 소부장 강세 흐름.',
+   tags:[{l:'반도체 후공정',c:'tr'},{l:'코스닥 강세',c:'tg'},{l:'코스닥',c:'tgr'}]},
 ];
 
 const LONG = [
-  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', score:93, horizon:'1~2년', upside:'+25~40%', reason:'AI 데이터센터 전력 수요 2030년 2.3배(IEA). 올해 북미 수주 1.2조. 반도체 폭락 장세에서도 구조적 성장 유지. CXMT 위협 완전 무관.', point:'반도체 쏠림 해소 국면 최대 수혜주. 꾸준한 분할 매수 적합.', tags:[{l:'AI 전력',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', score:90, horizon:'1~3년', upside:'+50~100%', reason:'고점 대비 -40% 폭락. 2Q 영업이익 68조 확인, 2027년 이후 메모리 공급 부족 전망. 해외 IB "비이성적 폭락" 평가. 코스피 PER 5배 후반 — 금융위기 수준 저평가.', point:'역대급 저점 구간 분할 매수 적합. 최소 6개월 이상 장기 관점으로 접근.', tags:[{l:'역대급 저평가',c:'tg'},{l:'반도체',c:'tr'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', score:88, horizon:'1~2년', upside:'+80~140%', reason:'고점 대비 -55% 반 토막. 해외 IB 36명 전원 매수 의견, 평균 목표가 325만원. HBM 시장 독점 지위 CXMT로 단기에 무너지지 않는다는 것이 전문가 중론.', point:'분할 매수 권장. 레버리지 ETF는 절대 금지 — 오늘부터 현금 3,000만원 요건.', tags:[{l:'고점대비 -55%',c:'tg'},{l:'IB 전원 매수',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'한화오션', code:'042660', market:'kospi', sector:'조선·방산', score:86, horizon:'1~2년', upside:'+20~40%', reason:'반도체 폭락 속 나홀로 강세. 방산·조선 수주 모멘텀 구조적. 반도체 쏠림 해소 시 가장 큰 수혜.', point:'반도체 대안 섹터 핵심주. 비중 조절하며 분할 매수.', tags:[{l:'대체 투자처',c:'tg'},{l:'방산·조선',c:'tpu'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'두산에너빌리티', code:'034020', market:'kospi', sector:'조선·방산', score:84, horizon:'2~4년', upside:'+30~50%', reason:'원전·SMR 장기 수요 CXMT와 무관. 반도체 폭락 구간 방어주 역할. 삼성·SK 충청 240조 전력 인프라 수혜.', point:'방어적 성격 장투 종목. 분할 매수 적합.', tags:[{l:'원전',c:'tpu'},{l:'장기보유',c:'tg'}], price:0, change:0},
-  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', score:80, horizon:'1~2년', upside:'+30~60%', reason:'스페이스X 나스닥 상장 후 강세. 반도체 대폭락 장세에서 상대적 방어. 우주항공 장기 성장 테마 불변.', point:'소액 분산 투자 권장.', tags:[{l:'스페이스X 협력',c:'tor'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'삼성전자', code:'005930', market:'kospi', sector:'반도체', score:93, horizon:'1~2년', upside:'+30~60%', reason:'7월 폭락 후 오늘 역사적 급등. 영업이익 68조 확인. 디레버리징 마무리 국면 진입. 해외 IB 전원 매수. 장기 분할 매수 최적 타이밍은 이미 지났을 수도 있으나 건강한 기업.', point:'오늘 급등으로 단기 차익실현 후 재진입 기회 탐색. 장기 보유 관점 유지.', tags:[{l:'반도체',c:'tr'},{l:'디레버리징 마무리',c:'tg'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'SK하이닉스', code:'000660', market:'kospi', sector:'반도체', score:91, horizon:'1~2년', upside:'+50~100%', reason:'오늘 장중 상한가. 외국인 2.6조 복귀. 디레버리징 마무리 인식 확산. IB 36명 전원 매수, 평균 목표가 325만원.', point:'오늘 급등 후 단기 조정 시 분할 매수. 주주환원책 발표 시점이 추가 모멘텀.', tags:[{l:'HBM 1위',c:'tr'},{l:'외인 복귀',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'한화에어로스페이스', code:'012450', market:'kospi', sector:'조선·방산', score:89, horizon:'1~2년', upside:'+25~45%', reason:'방산 순환매 핵심. 반도체 쏠림 해소 수혜. 중동 재건 + 우주항공 투트랙 성장.', point:'순환매 확산 장세에서 방어적이면서도 성장성 있는 최적 장투 종목.', tags:[{l:'방산',c:'tpu'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'LS일렉트릭', code:'010120', market:'kospi', sector:'AI·데이터센터', score:88, horizon:'1~2년', upside:'+25~40%', reason:'AI 전력망 테마 + 순환매 + 구조적 성장. 반도체 폭락 중에도 강세 유지. 7월 급락장에서 유일하게 방어한 섹터.', point:'가장 안정적인 장투 종목 중 하나. 꾸준한 분할 매수.', tags:[{l:'AI 전력',c:'tb'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'레인보우로보틱스', code:'277810', market:'kosdaq', sector:'로봇', score:84, horizon:'1~3년', upside:'+40~80%', reason:'코스닥 로봇 강세 지속. 반도체 쏠림 해소 최대 수혜. 피지컬 AI 하반기 확산 기대.', point:'분할 매수 권장. 코스닥 강세 국면 최대 수혜주.', tags:[{l:'로봇',c:'tr'},{l:'코스닥 강세',c:'tg'},{l:'장기보유',c:'tg'}], price:0, change:0},
+  {name:'켄코아에어로스페이스', code:'274090', market:'kosdaq', sector:'우주항공', score:81, horizon:'1~2년', upside:'+30~60%', reason:'스페이스X 협력 + 우주항공 성장 테마. 코스닥 강세 기조 수혜.', point:'소액 분산 투자 권장.', tags:[{l:'스페이스X',c:'tor'},{l:'우주항공',c:'tor'},{l:'장기보유',c:'tg'}], price:0, change:0},
 ];
 
 const SECTORS = [
-  {icon:'💥', name:'CXMT 쇼크 & 코스피 대폭락', desc:'7/27 중국 창신메모리(CXMT) 상하이 상장, 시총 1위 등극. 7/28 코스피 -10.84%(6,023) 서킷브레이커. 7/29 SK하이닉스 실적 어닝쇼크 + 사상 최초 2거래일 연속 서킷브레이커(-5.98%, 5,663). 코스피 고점(9,385) 대비 현재 -41%.', stocks:['삼성전자','SK하이닉스'], momentum:'⚠️ 역대급 폭락 구간', risk:'매우 높음'},
-  {icon:'⚡', name:'K-전력기기 — 최강 방어주', desc:'반도체 폭락 속 LS일렉트릭·HD현대일렉트릭·효성중공업은 강세 또는 방어. AI 데이터센터 전력 수요는 GPU 회사가 누구든 필요. IEA 전망 2030년 데이터센터 전력 2.3배. CXMT·메타 쇼크 완전 무관 섹터.', stocks:['LS일렉트릭','HD현대일렉트릭','효성중공업'], momentum:'✅ 구조적 강세', risk:'낮음'},
-  {icon:'🛡', name:'조선·방산 — 대체 투자처', desc:'7/30 한화오션 +6.3% 나홀로 급등. 반도체 대폭락 속 대체 투자처로 자금 집중. 지정학적 긴장 지속, 방산·조선 수주 모멘텀 유지. 두산에너빌리티 원전 섹터도 방어적 역할.', stocks:['한화오션','현대로템','두산에너빌리티'], momentum:'✅ 대체 투자처 부각', risk:'낮음'},
-  {icon:'💾', name:'반도체 낙폭과대 반등', desc:'삼성전자 7/31 실적 발표 후 7.1% 급등. 해외 IB "비이성적 폭락" 진단. 코스피 PER 5배 후반 — 금융위기 수준. 그러나 CXMT 중국 D램 추격, HBM4 지연 우려 등 불확실성 여전. 분할 접근 필수.', stocks:['삼성전자','SK하이닉스','두산테스나','한미반도체'], momentum:'↗ 반등 시도 중', risk:'높음'},
-  {icon:'🤖', name:'레버리지 ETF 규제 시행', desc:'오늘(7/31)부터 삼성전자·SK하이닉스 단일종목 레버리지 ETF 기본예탁금 3,000만원(현금만) 상향. 증권가는 레버리지 변동성 증폭 구조가 어느 정도 완화될 것으로 기대. 단, 기존 보유자도 추가 매수 시 적용.', stocks:['삼성전자','SK하이닉스'], momentum:'↗ 변동성 축소 기대', risk:'중간'},
-  {icon:'🤖', name:'로봇·피지컬 AI', desc:'반도체 쏠림 해소 시 자금 이동 기대. CXMT 쇼크와 무관한 테마. 레인보우로보틱스·두산로보틱스 낙폭과대 반등 구간.', stocks:['레인보우로보틱스','두산로보틱스'], momentum:'↗ 쏠림 해소 수혜', risk:'높음'},
-  {icon:'🚀', name:'우주항공', desc:'스페이스X $200대 안착 유지. 반도체 대폭락 장세에서 우주항공 상대적 방어. 켄코아에어로스페이스 비반도체 대안 테마.', stocks:['켄코아에어로스페이스'], momentum:'↗ 상대적 안정', risk:'중간'},
+  {icon:'🚀', name:'오늘 역사적 급등 — 코스피 +1000p', desc:'SK하이닉스 장중 +29.73% 상한가, 삼성전자 +26.33%. 코스피 하루 1,000포인트 이상 급등. AI 디레버리징 마무리 인식 확산, 외국인 SK하이닉스 2.6조 순매수 복귀. 사상 기록될 하루. ⚠️ 상한가 종목 추격 매수 매우 위험.', stocks:['삼성전자','SK하이닉스'], momentum:'🔥 역사적 급등', risk:'매우 높음 (추격 주의)'},
+  {icon:'🛡', name:'방산·건설 순환매 급등', desc:'어제(8/4) 한화에어로스페이스 +9.25%, 한국항공우주 +11.16%, 대우건설 +14.29%, 삼성E&A +7.55%. 반도체 차익실현 자금이 방산·건설로 이동. 오늘도 순환매 지속 기대. 이 섹터가 오늘 단타 최적.', stocks:['한화에어로스페이스','한국항공우주','한화오션'], momentum:'✅ 순환매 핵심', risk:'낮음'},
+  {icon:'⚡', name:'AI 전력망·전선 테마 신규 급부상', desc:'오늘 가온전선 +10.69%, 대원전선 +12.13% 급등. 주맵 이벤트 테마 AI 전력망 병목 2위. LS일렉트릭 인기 9위(157계단↑). 데이터센터 전력 수요 → 전선·변압기 섹터로 새 자금 유입. 오늘 신규 테마.', stocks:['가온전선','LS일렉트릭','HD현대일렉트릭'], momentum:'🔥 신규 급부상', risk:'중간'},
+  {icon:'🤖', name:'코스닥 로봇·바이오 강세', desc:'코스닥 3거래일 연속 매수 사이드카 발동. 레인보우로보틱스 주도주 7위(27계단↑). HLB +10.84%, 리가켐바이오 +14.88% (8/4). 반도체 쏠림 완화 → 코스닥 낙수효과 현실화. 로봇·바이오·소부장 강세.', stocks:['레인보우로보틱스','두산로보틱스','켄코아에어로스페이스'], momentum:'✅ 3일째 강세', risk:'중간'},
+  {icon:'🏭', name:'반도체 비(非)대형주 순환매', desc:'삼성전기 오늘 인기 3위, NAVER 4위(53계단↑). 두산에너빌리티 주도주 6위. 반도체 대형주 차익실현 → AI 플랫폼·부품·원전으로 자금 확산. SK텔레콤 어제 +11.46%.', stocks:['삼성전기','NAVER','두산에너빌리티'], momentum:'✅ 자금 확산', risk:'낮음'},
+  {icon:'🚢', name:'조선·원전 방어 + 공격', desc:'두산에너빌리티 오늘 주도주 6위(+2.4%). 한화오션 방산·조선 지속. 7월 폭락 내내 방어주 역할 → 오늘 급등 장세에서 공격적 상승으로 전환.', stocks:['두산에너빌리티','한화오션','현대로템'], momentum:'✅ 방어→공격 전환', risk:'낮음'},
 ];
 
 const REPORT = {
-  date: '2026년 7월 31일 (금)',
-  updated: '7/31 업데이트 — 레버리지 ETF 규제 시행일',
+  date: '2026년 8월 5일 (수) — 역사적 급등일',
+  updated: '8/5 실시간 업데이트',
   global: [
-    {label:'삼성전자 2Q 공식 실적(7/31)', value:'영업이익 68조 확인 → 주가 7.1% 급등', cls:'up'},
-    {label:'SK하이닉스 2Q 실적(7/29)', value:'어닝쇼크(예상 하회) + HBM4 지연 우려', cls:'down'},
-    {label:'CXMT 상장(7/27)', value:'중국 상하이 시총 1위 — 반도체 D램 추격 현실화 우려', cls:'down'},
-    {label:'7월 FOMC', value:'금리 동결 + 케빈 워시 매파 발언 — 미국 증시 하락', cls:'down'},
-    {label:'MS 실적', value:'시장 기대치 상회 — 빅테크 실적은 견조', cls:'up'},
-    {label:'원달러 환율', value:'1,437원 (7/30 기준) — 반도체 폭락 후 일부 안정', cls:'flat'},
+    {label:'나스닥(전일)', value:'+2.13% — 미국 빅테크 강세', cls:'up'},
+    {label:'S&P500(전일)', value:'+1.48%', cls:'up'},
+    {label:'나스닥 선물(오늘)', value:'+1.30% 긍정적', cls:'up'},
+    {label:'EWY 선물(오늘)', value:'+0.50% 중립', cls:'flat'},
+    {label:'VIX(오늘)', value:'-0.81% — 공포 감소', cls:'up'},
+    {label:'원달러 환율', value:'1,431원 — 안정', cls:'flat'},
   ],
   domestic: [
-    {label:'코스피 7/28', value:'-10.84%(6,023) 서킷브레이커 — 검은 화요일', cls:'down'},
-    {label:'코스피 7/29', value:'-5.98%(5,663) 서킷브레이커 — 사상 최초 2연속', cls:'down'},
-    {label:'코스피 7/30 종가', value:'5,593.56 (-1.23%) — 외국인 복귀 시도에도 하락', cls:'down'},
-    {label:'삼성전자(7/30)', value:'207,000원 — 고점 대비 -42%', cls:'down'},
-    {label:'SK하이닉스(7/30)', value:'1,322,000원 — 고점 대비 -55%', cls:'down'},
-    {label:'한화오션(7/30)', value:'+6.3% 나홀로 급등 — 대체 투자처 부각', cls:'up'},
+    {label:'코스피 8/5 장중', value:'역사적! +1,000포인트 이상 급등 중', cls:'up'},
+    {label:'SK하이닉스(오늘)', value:'장중 +29.73% 상한가 도달', cls:'up'},
+    {label:'삼성전자(오늘)', value:'장중 +26.33% 역사적 급등', cls:'up'},
+    {label:'코스닥(8/4 종가)', value:'780.72 (+5.88%) — 3일 연속 사이드카', cls:'up'},
+    {label:'외국인(SK하이닉스)', value:'오늘 2.6조 순매수 복귀', cls:'up'},
+    {label:'8/4 방산 순환매', value:'한화에어로+9.25%, 한항우+11.16%', cls:'up'},
   ],
   supply: [
-    {label:'외국인(7/28~29)', value:'이틀간 약 6조원 투매', cls:'down'},
-    {label:'기관(7/29)', value:'2조1506억 순매수 — 지수 하방 지지', cls:'up'},
-    {label:'삼성전기(7/30)', value:'실적 +107% 호조에도 -14.58% 급락 — 차익실현', cls:'down'},
-    {label:'레버리지 ETF', value:'오늘부터 예탁금 현금 3,000만원 — 규제 시행', cls:'flat'},
+    {label:'외국인(오늘 SK하이닉스)', value:'2.6조 순매수 — 대규모 복귀 신호', cls:'up'},
+    {label:'기관(8/4)', value:'5,447억 순매수', cls:'up'},
+    {label:'레버리지 ETF', value:'7/31 규제 이후 변동성 진정 중', cls:'up'},
+    {label:'순환매 흐름', value:'반도체→방산·건설·전선·AI플랫폼 전방위', cls:'up'},
   ],
   themes: [
-    {name:'💥 CXMT 쇼크 — 중국 D램 추격 현실화', badge:'rb-down', comment:'중국 창신메모리(CXMT) 상하이 상장 성공, 자체 DUV 노광장비 개발 소식이 삼성전자·SK하이닉스 D램 과점 체제 붕괴 우려를 자극. 7/28~29 이틀 연속 서킷브레이커. 전문가들은 단기 과도한 반응이라 평가하지만 구조적 리스크는 현실.'},
-    {name:'📊 삼성전자 2Q 실적 — 반등 신호탄?', badge:'rb-up', comment:'7/31 공식 실적 발표 후 7.1% 급등. 영업이익 68조(전년比 +1,739%) 확인. 에이전틱 AI 확산으로 2027년 이후 메모리 공급 부족 전망 제시. 해외 IB들 "비이성적 폭락" 진단.'},
-    {name:'⚡ K-전력기기 — 폭락장 최강 방어주', badge:'rb-up', comment:'LS일렉트릭·HD현대일렉트릭·효성중공업은 반도체 폭락 구간 내내 방어 또는 강세. AI 데이터센터 전력 수요는 CXMT·메타 쇼크와 무관한 구조적 성장. 3사 올해 영업이익 3조원 달성 기대.'},
-    {name:'🛡 한화오션 나홀로 급등 — 대체 투자처', badge:'rb-up', comment:'7/30 반도체 역대급 하락장 속 +6.3% 나홀로 급등. 방산·조선 수주 모멘텀 지속 + 기술주 조정 국면 대체 투자처. 반도체 쏠림 해소 후 가장 큰 수혜 예상.'},
-    {name:'📋 레버리지 ETF 3,000만원 — 오늘 시행', badge:'rb-flat', comment:'오늘(7/31)부터 삼성전자·SK하이닉스 단일종목 레버리지 ETF 기본예탁금 현금 3,000만원 필요. 테슬라·엔비디아 등 해외 단일종목에도 동일 적용. 변동성 증폭 구조가 다소 완화될 것으로 증권가 기대.'},
+    {name:'🚀 AI 디레버리징 마무리 — 역사적 반등', badge:'rb-up', comment:'AI 반도체 관련 디레버리징이 막바지에 진입했다는 인식이 확산되며 외국인이 SK하이닉스에만 2.6조를 쏟아부었어요. 삼성전자 +26%, SK하이닉스 +29% — 코스피 역사에 남을 하루.'},
+    {name:'🛡 방산·건설 순환매 — 오늘도 지속', badge:'rb-up', comment:'어제 한화에어로스페이스 +9.25%, 한국항공우주 +11.16%, 대우건설 +14.29%. 반도체 차익실현 자금이 방산·건설로 이동. 반도체가 역사적 급등인 오늘, 방산·건설도 추가 강세 기대.'},
+    {name:'⚡ AI 전력망·전선 테마 신규 급부상', badge:'rb-up', comment:'가온전선 +10.69%, 대원전선 +12.13% 오늘 급등. 주맵 이벤트 테마 AI 전력망 병목 2위. AI 데이터센터 전선 수요 구조적 성장이 전선주에 반영되는 신규 흐름.'},
+    {name:'🤖 코스닥 3일 연속 매수 사이드카', badge:'rb-up', comment:'반도체 쏠림 완화 → 코스닥 낙수효과 현실화. HLB +10.84%, 리가켐바이오 +14.88%, 레인보우로보틱스 주도주 7위 급부상. 레버리지 규제 이후 예측했던 "대형주 완화→코스닥 낙수"가 이틀 만에 현실화.'},
+    {name:'⚠️ 추격 매수 주의 — 차익실현 물량', badge:'rb-flat', comment:'상한가 도달 종목은 단타 진입 매우 위험. 오늘 급등 후 오후 차익실현 물량 주의. 단타는 덜 오른 순환매 종목(방산·전선·AI 플랫폼) 집중이 유리.'},
   ],
   stocks: [
-    {name:'LS일렉트릭', comment:'7월 반도체 폭락 내내 방어적 흐름. AI 전력 수요 구조적 성장. 비반도체 방어주 중 가장 안정적.'},
-    {name:'한화오션', comment:'7/30 반도체 대폭락 속 +6.3% 나홀로 급등. 대체 투자처로 매수세 집중. 조선·방산 섹터 핵심주.'},
-    {name:'삼성전자', comment:'7/31 공식 실적 발표 후 7.1% 급등. 영업이익 68조 확인. 고점 대비 -42% 낙폭과대. 2027년 메모리 공급 부족 전망.'},
-    {name:'SK하이닉스', comment:'어닝쇼크 + HBM4 지연 우려로 7/30 -5.64%. 그러나 해외 IB 36명 전원 매수, 평균 목표가 325만원(+146%). 역대급 저점 분할 매수.'},
-    {name:'두산에너빌리티', comment:'반도체 대폭락 중 원전 섹터 방어적 역할. 삼성·SK 충청 240조 전력 수혜.'},
-    {name:'삼성전기', comment:'2Q 실적 +107% 호조에도 -14.58% 급락. 차익실현 후 낙폭과대 반등 구간 진입.'},
-    {name:'두산테스나', comment:'반도체 후공정 — 업황 펀더멘털 훼손 없는 수급 충격 급락. 분할 매수 관점.'},
+    {name:'한화에어로스페이스', comment:'어제 +9.25% → 오늘도 방산 순환매 지속 기대. 오늘 추가 상승 가능성 가장 높은 종목.'},
+    {name:'NAVER', comment:'오늘 인기 4위(+53계단), +3.86%. AI 플랫폼 순환매. 반도체 급등 국면에서 비반도체 핵심주.'},
+    {name:'가온전선', comment:'오늘 인기 10위(+105계단), +10.69% 급등. AI 전력망 병목 신규 테마. 대원전선과 함께 주목.'},
+    {name:'삼성전기', comment:'오늘 인기 3위. 프리마켓 +8% 강세. AI 서버 MLCC 수요 구조적 성장.'},
+    {name:'삼성전자', comment:'오늘 +26% 역사적 급등. 이미 많이 올랐으니 추격 매수보다 조정 시 재진입 전략.'},
+    {name:'레인보우로보틱스', comment:'주도주 7위(+27계단). 코스닥 3일 연속 강세. 로봇 테마 낙수효과 수혜.'},
+    {name:'두산에너빌리티', comment:'주도주 6위. 어제 +7.83% 급등. 원전 + 순환매 확산 수혜 지속.'},
   ],
   risk: [
-    'CXMT 중국 D램 추격 — 실제 공급 경쟁력 확보 시 삼성·하이닉스 이익 구조 훼손 가능',
-    'HBM4 출하 지연 — SK하이닉스 컨퍼런스콜 우려 발언, 3Q 실적에 영향',
-    '레버리지 ETF 청산 매물 — 규제 시행으로 일부 진정되나 기존 레버리지 해소 물량 여전',
-    'FOMC 매파 기조 — 금리 인상 시그널 지속 시 성장주 추가 부담',
-    '코스닥 644선 — 반도체 소부장·중소형주 유동성 위기 지속',
+    '상한가 종목 추격 매수 — 오후 차익실현 물량 대규모 출회 가능',
+    '오늘 역사적 급등 후 내일(8/6) 되돌림 가능성 — 단타 수익 실현 후 익절 전략 필요',
+    'CXMT 중국 반도체 추격 — 근본 리스크 해소 안 됨, 단기 급등 이후 재부각 가능',
+    '코스피 1,000포인트 하루 급등 — 기술적 과매수 구간, RSI 70 초과 종목 주의',
+    '레버리지 ETF 청산 물량 — 규제 이후 진정됐지만 완전 해소는 아님',
   ],
-  tomorrow: '다음 거래일(8/3, 월) 핵심 관심사는 삼성전자 7.1% 급등 효과가 SK하이닉스와 반도체 전반으로 확산되느냐. 레버리지 ETF 3,000만원 규제 첫 적용으로 변동성이 일부 진정될 가능성. 한화오션 등 조선·방산 대체 투자처 흐름이 유지되는지도 주목. 미국 빅테크 실적(구글·애플·아마존) 발표가 AI 투자 수익성 논란의 분수령.',
-  aiOpinion: `오늘(7/31) 7월의 마지막 거래일이에요. 한 달이 너무 힘들었죠. 정직하게 정리해드릴게요.
+  tomorrow: '오늘 역사적 급등 후 내일은 차익실현 장세로 전환 가능성 있어요. 반도체 대형주보다 어제·오늘 덜 오른 방산·전선·AI 플랫폼 종목이 내일도 강세를 유지할 가능성. 레버리지 ETF 규제로 급락 증폭 구조는 완화됐으나, CXMT 리스크는 여전히 시장 심리 변수.',
+  aiOpinion: `오늘(8/5) 장이 정말 역사적인 날이에요. 단타 치신다고 했으니 솔직하게 정리할게요.
 
-📌 7월에 무슨 일이 있었나요?: 6월 말 코스피 9,385 사상 최고치였는데 7월 한 달 만에 5,593까지 -41% 폭락했어요. 7월에만 서킷브레이커가 여러 번, 그 중 7/28~29는 사상 최초 2거래일 연속이었어요. 메타 쇼크(7/2)→ FOMC 매파(7/30)→ CXMT 상장(7/27)→ SK하이닉스 어닝쇼크(7/29)가 연속으로 터지면서 반도체주가 완전히 무너졌어요.
+📌 오늘 상황 요약: SK하이닉스 +29%, 삼성전자 +26%, 코스피 하루 1,000포인트 이상 급등. 외국인이 SK하이닉스에만 2.6조를 쏟아부었어요. "AI 디레버리징이 막바지"라는 인식이 퍼지면서 7월 한 달 폭락분을 하루에 상당 부분 되돌리는 중이에요.
 
-📌 오늘 삼성전자 7.1% 급등 — 바닥인가요?: 영업이익 68조 공식 확인과 "2027년 이후 메모리 공급 부족" 전망이 긍정 신호였어요. 해외 IB들은 "비이성적 폭락"이라고 진단하고 있고요. 하지만 단 하루 반등으로 바닥을 선언하기에는 CXMT 리스크가 여전히 해소되지 않았어요. 삼성전자는 분할 매수 관점, 레버리지는 절대 금지예요.
+📌 단타 전략 — 오늘 어떻게 치느냐: 삼성전자·SK하이닉스는 이미 엄청나게 올랐어요. 상한가 도달 종목에 지금 추격 매수하면 오후 차익실현 물량에 깔릴 수 있어요. 오늘 단타는 차익실현 자금이 이동하는 종목을 노리는 게 더 안전해요.
 
-📌 레버리지 ETF 규제 — 오늘부터 달라지는 것: 오늘부터 삼성전자·SK하이닉스 단일종목 레버리지 ETF 사려면 계좌에 현금 3,000만원이 있어야 해요. 이게 7월 폭락 때 지수를 두 배로 증폭시켰던 구조를 어느 정도 막을 수 있어요. 이미 보유한 분도 추가 매수 시 적용돼요.
+▶ 단타 1순위: 한화에어로스페이스·한국항공우주 (방산 순환매 — 어제도 오늘도 강세 지속)
+▶ 단타 2순위: NAVER·삼성전기 (반도체 차익실현 자금 이동처, 오늘 인기 3·4위)
+▶ 단타 3순위: 가온전선·LS일렉트릭 (AI 전력망 신규 테마 급부상, 오늘 인기 10·9위)
+▶ 단타 4순위: 레인보우로보틱스·두산에너빌리티 (코스닥 강세 + 순환매)
 
-📌 지금 어떤 전략이 현명한가요?: 반도체 낙폭과대 분할 매수(삼성전자·SK하이닉스) + 전력기기 방어주 유지(LS일렉트릭·HD현대일렉트릭) + 조선·방산 대체 투자처(한화오션) 조합이 지금 시장에서 가장 균형 잡힌 접근이에요. CXMT 리스크가 구조적인지 일시적인지는 3Q 실적까지 지켜봐야 해요. 무리한 베팅보다 현금 비중을 일정 수준 유지하면서 분할로 접근하세요.`
+📌 오늘 조심해야 할 것: 삼성전자·SK하이닉스는 이미 장 초반에 최고점 찍고 하락하는 패턴이 나올 수 있어요. 오후 2~3시에 차익실현 물량이 쏟아지면 RSI 과매수 구간에서 빠르게 조정받을 수 있어요. 목표가에 도달하면 미련 없이 익절하세요.
+
+📌 내일 전망: 오늘 엄청나게 올랐으니 내일은 숨 고르기가 올 수 있어요. 반도체 대형주는 차익실현, 아직 덜 오른 방산·전선 쪽은 추가 강세 가능. 오늘 단타 수익 확보가 최우선이에요.`
 };
 
-let allStocks=[], longStocks=[], curMode='danta', curFilter='all', TOKEN='';
+let allStocks=[],longStocks=[],curMode='danta',curFilter='all',TOKEN='';
 async function getToken(){if(TOKEN)return TOKEN;const r=await fetch(`${PROXY}/token`);const d=await r.json();TOKEN=d.access_token;return TOKEN;}
 async function fetchPrice(code){try{const r=await fetch(`${PROXY}/quote/${code}?token=${TOKEN}`);const d=await r.json();const o=d.output;if(!o||!o.stck_prpr)return null;return{price:parseInt(o.stck_prpr),change:parseFloat(o.prdy_ctrt),volRatio:parseFloat((parseInt(o.acml_vol||0)/Math.max(parseInt(o.avrg_vol||1),1)).toFixed(1))};}catch(e){return null;}}
 
@@ -265,8 +269,8 @@ function switchMode(m){
   document.getElementById('card-section').style.display=(m==='sector'||m==='report')?'none':'flex';
   document.getElementById('sector-section').style.display=m==='sector'?'block':'none';
   document.getElementById('report-section').style.display=m==='report'?'block':'none';
-  const titles={danta:'오늘의 단타 추천 종목',long:'장기 투자 추천 종목',sector:'섹터별 시장 분석',report:'오늘의 시황 리포트'};
-  document.getElementById('sec-title').textContent=titles[m];
+  const t={danta:'오늘의 단타 추천 종목',long:'장기 투자 추천 종목',sector:'섹터별 시장 분석',report:'오늘의 시황 리포트'};
+  document.getElementById('sec-title').textContent=t[m];
   if(m==='danta')render(allStocks);
   else if(m==='long')render(longStocks);
   else if(m==='sector')renderSectors();
@@ -355,20 +359,20 @@ function renderReport(){
   s.innerHTML=`
     <div class="report-wrap">
       <div class="report-meta">📅 ${REPORT.date} · ${REPORT.updated}</div>
-      <div class="report-card">
-        <h3>🌍 글로벌·국내 주요 시황</h3>
-        <div class="report-grid">${REPORT.global.map(i=>`<div class="report-item"><div class="ri-label">${i.label}</div><div class="ri-val ${i.cls}">${i.value}</div></div>`).join('')}</div>
+      <div class="report-card" style="border-left:3px solid #ef4444">
+        <h3>🚨 오늘 역사적 급등 현황 (실시간)</h3>
+        <div class="report-grid">${REPORT.domestic.map(i=>`<div class="report-item"><div class="ri-label">${i.label}</div><div class="ri-val ${i.cls}">${i.value}</div></div>`).join('')}</div>
       </div>
       <div class="report-card">
-        <h3>📈 7월 코스피 주요 흐름</h3>
-        <div class="report-grid">${REPORT.domestic.map(i=>`<div class="report-item"><div class="ri-label">${i.label}</div><div class="ri-val ${i.cls}">${i.value}</div></div>`).join('')}</div>
+        <h3>🌍 글로벌 시황</h3>
+        <div class="report-grid">${REPORT.global.map(i=>`<div class="report-item"><div class="ri-label">${i.label}</div><div class="ri-val ${i.cls}">${i.value}</div></div>`).join('')}</div>
       </div>
       <div class="report-card">
         <h3>💰 수급 동향</h3>
         <div class="report-grid">${REPORT.supply.map(i=>`<div class="report-item"><div class="ri-label">${i.label}</div><div class="ri-val ${i.cls}">${i.value}</div></div>`).join('')}</div>
       </div>
       <div class="report-card">
-        <h3>🔥 주요 테마 & 이슈</h3>
+        <h3>🔥 오늘 주요 테마</h3>
         ${REPORT.themes.map(t=>`<div class="stock-comment"><div class="sc-name">${t.name} <span class="report-badge ${t.badge}">${t.badge==='rb-up'?'강세':t.badge==='rb-down'?'약세':'주목'}</span></div><div class="sc-text">${t.comment}</div></div>`).join('')}
       </div>
       <div class="report-card">
@@ -380,11 +384,11 @@ function renderReport(){
         <ul>${REPORT.risk.map(r=>`<li>${r}</li>`).join('')}</ul>
       </div>
       <div class="report-card" style="border-left:3px solid #10b981">
-        <h3>💡 다음 주(8/3~) 전망</h3>
+        <h3>💡 내일(8/6) 전망</h3>
         <p>${REPORT.tomorrow}</p>
       </div>
       <div class="report-card" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:none">
-        <h3 style="color:#fff">🤖 AI 종합 의견</h3>
+        <h3 style="color:#fff">🤖 AI 종합 의견 — 오늘 단타 전략</h3>
         <p style="color:#e2e8f0;line-height:1.9;font-size:13px;white-space:pre-line">${REPORT.aiOpinion}</p>
       </div>
     </div>`;
@@ -407,7 +411,7 @@ async function init(){
     if(ss&&ss.price){document.getElementById('h-ss').textContent=ss.price.toLocaleString()+'원';document.getElementById('h-ss').className='mv '+(ss.change>=0?'up':'down');}
     if(sk&&sk.price){document.getElementById('h-sk').textContent=sk.price.toLocaleString()+'원';document.getElementById('h-sk').className='mv '+(sk.change>=0?'up':'down');}
     document.getElementById('h-time').textContent=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})+' 실시간';
-    note.innerHTML='✅ 한투 API 실시간 데이터 연동 완료 — 7월 31일 업데이트';
+    note.innerHTML='✅ 한투 API 실시간 연동 완료 — 8월 5일 역사적 급등일 업데이트';
     note.className='note';
   }catch(e){note.innerHTML='⚠️ 실시간 연동 실패 — 새로고침 해주세요';note.className='note loading';}
   render(allStocks);
